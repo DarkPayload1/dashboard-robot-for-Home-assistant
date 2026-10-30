@@ -1,3 +1,21 @@
+# 1.7.9-rc.1
+
+## Dansk
+
+- Viser den aktive Piper-model eller giver valg mellem browserens stemmer til det valgte sprog. Bevarer prøveknap og taletempo.
+- Husker op til 20 samtaletrin og AI-samtale-id i den aktuelle browserfane efter genindlæsning. Udløber efter 30 minutters inaktivitet; Ny samtale rydder historikken. Historik synkroniseres ikke mellem enheder.
+- Tilføjer synlig status for lytning, tænkning og tale samt en stopknap til oplæsning.
+- Tilføjer valg mellem talt velkomst, lydløs velkomst og ingen velkomst under Stemme og taletempo. Talt velkomst begrænses til én gang pr. 30 minutter i fanen.
+- Giver mere konkrete fejl for adgang, tidsudløb, AI-grænser, tomme svar og lokal tale på dansk, engelsk og tysk.
+
+## English
+
+- Shows the active Piper model or lets you choose matching browser voices. Keeps voice testing and speech speed controls.
+- Restores up to 20 conversation turns and the AI conversation ID after reloading the current browser tab. Expires after 30 minutes of inactivity; New conversation clears it. History is not synced across devices.
+- Adds visible listening, thinking and speech status with a stop speech button.
+- Adds spoken, silent and disabled greeting choices under Voice and speed. Spoken greetings occur at most once every 30 minutes in the tab.
+- Adds actionable access, timeout, AI quota, empty response and local speech errors in Danish, English and German.
+
 # 1.7.8-rc.1
 
 ## Dansk

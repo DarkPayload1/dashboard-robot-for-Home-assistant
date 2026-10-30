@@ -144,7 +144,7 @@ class DashboardRobot extends HTMLElement {
   async _speakLocal(text,greeting=false){
     if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();return;}
     const engine=this._localSpeechEntity();if(!engine)return;
-    const marker={text};this._utterance=marker;if(greeting)this._helloPending=true;
+    const marker={text};this._utterance=marker;if(greeting)this._helloPending=true;this._renderExperience();
     const note=this.shadowRoot?.querySelector('.voice-note');let timer;
     try{
       const language=({da:'da_DK',en:'en_GB',de:'de_DE'})[this._config?.language||'da'];
@@ -153,7 +153,7 @@ class DashboardRobot extends HTMLElement {
       if(typeof response.path!=='string'||!response.path.startsWith('/api/tts_proxy/'))throw new Error('Invalid speech path');
       const audio=new Audio(response.path);this._ttsAudio=audio;
       audio.playbackRate=this._voiceSettings().rate;audio.preservesPitch=true;
-      audio.onplaying=()=>{if(this._utterance!==marker)return;this._stage?.classList.add('speaking');if(greeting){this._helloDone=true;this._helloPending=false;this._clearHelloListeners();}this._refreshExpression();};
+      audio.onplaying=()=>{if(this._utterance!==marker)return;this._stage?.classList.add('speaking');if(greeting){this._helloDone=true;this._markHello();this._helloPending=false;this._clearHelloListeners();}this._refreshExpression();this._renderExperience();};
       audio.onended=()=>{if(this._utterance===marker)this._finishSpeech();};
       audio.onerror=()=>{if(this._utterance===marker){this._finishSpeech();if(note)note.textContent=({da:'Den lokale tale kunne ikke afspilles. Kontrollér Piper.',en:'Local speech could not play. Check Piper.',de:'Lokale Sprachausgabe fehlgeschlagen. Prüfe Piper.'})[this._config?.language||'da'];}};
       if(note)note.textContent='';
@@ -162,7 +162,7 @@ class DashboardRobot extends HTMLElement {
       if(this._utterance!==marker)return;
       this._finishSpeech();this._helloPending=false;
       if(greeting&&error.name==='NotAllowedError')this._helloOnInteraction();
-      else if(note)note.textContent=({da:'Kunne ikke afspille lokal tale. Kontrollér Piper og tryk Læs højt igen.',en:'Local speech could not play. Check Piper and try Read aloud again.',de:'Lokale Sprachausgabe fehlgeschlagen. Prüfe Piper und versuche Vorlesen erneut.'})[this._config?.language||'da'];
+      else if(note)note.textContent=this._friendlyError(error?.name==='NotAllowedError'?'audio_permission':/timeout/i.test(error?.message||'')?'speech timeout':'piper');
     }finally{clearTimeout(timer);}
   }
 
@@ -189,7 +189,7 @@ class DashboardRobot extends HTMLElement {
   }
   _renderVoiceSettings(){
     const root=this.shadowRoot,host=root?.querySelector('.message');if(!host)return;
-    const synth=window.speechSynthesis;if(!synth)return;
+    const synth=window.speechSynthesis;if(!synth&&!this._localSpeechEntity())return;
     const lang=this._config?.language||'da',words=({da:['Stemme og taletempo','Automatisk stemme','Taletempo','Prøv stemmen','Hej! Jeg er '],en:['Voice and speed','Automatic voice','Speech speed','Test voice','Hello! I am '],de:['Stimme und Tempo','Automatische Stimme','Sprechtempo','Stimme testen','Hallo! Ich bin ']})[lang]||['Voice and speed','Automatic voice','Speech speed','Test voice','Hello! I am '];
     let box=root.querySelector('.voice-settings');
     if(!box){
@@ -199,16 +199,55 @@ class DashboardRobot extends HTMLElement {
       const test=document.createElement('button');test.type='button';test.className='voice-test';
       const save=()=>this._saveVoiceSettings({voice:select.value,rate:Number(rate.value)});
       select.addEventListener('change',save);rate.addEventListener('change',save);
-      test.addEventListener('click',()=>{if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}this._spokenAnswer=words[4]+this._robotName()+'.';this._speak();});
+      test.addEventListener('click',()=>{if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}this._spokenAnswer=({da:'Hej! Jeg er ',en:'Hello! I am ',de:'Hallo! Ich bin '})[this._config?.language||'da']+this._robotName()+'.';this._speak();});
       box.append(summary,select,rate,test);host.append(box);
     }
     box.querySelector('.voice-settings-title').textContent=words[0];
     const select=box.querySelector('.voice-select'),rate=box.querySelector('.voice-rate'),test=box.querySelector('.voice-test'),settings=this._voiceSettings();
     select.setAttribute('aria-label',words[0]);rate.setAttribute('aria-label',words[2]);test.textContent=words[3];
-    const voices=this._localSpeechEntity()?[{voiceURI:'local-piper',name:'Piper · '+({da:'Dansk',en:'English',de:'Deutsch'}[lang]||lang),lang,localService:true}]:synth.getVoices().filter(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang),signature=JSON.stringify([lang,voices.map(v=>[v.voiceURI,v.name])]);
-    if(select.dataset.signature!==signature){select.dataset.signature=signature;select.replaceChildren();const auto=document.createElement('option');auto.value='auto';auto.textContent=words[1];select.append(auto);for(const v of voices){const o=document.createElement('option');o.value=v.voiceURI||v.name;o.textContent=v.name+' ('+v.lang+')';select.append(o);}}
-    select.value=[...select.options].some(o=>o.value===settings.voice)?settings.voice:'auto';rate.value=String(settings.rate);test.disabled=!!this._busy||this._listening||!voices.length;
-    if(!this._voiceSettingsChanged){this._voiceSettingsChanged=()=>this._renderVoiceSettings();synth.addEventListener?.('voiceschanged',this._voiceSettingsChanged);}
+    const voices=this._localSpeechEntity()?[{voiceURI:'local-piper',name:'Piper · '+this._localSpeechOptions(this._localSpeechEntity()).voice+' · '+({da:'Dansk',en:'English',de:'Deutsch'}[lang]||lang),lang,localService:true}]:synth.getVoices().filter(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang),signature=JSON.stringify([lang,voices.map(v=>[v.voiceURI,v.name])]);
+    if(select.dataset.signature!==signature){select.dataset.signature=signature;select.replaceChildren();const auto=document.createElement('option');auto.value='auto';auto.textContent=this._localSpeechEntity()?voices[0].name:words[1];select.append(auto);for(const v of (this._localSpeechEntity()?[]:voices)){const o=document.createElement('option');o.value=v.voiceURI||v.name;o.textContent=v.name+' ('+v.lang+')';select.append(o);}}
+    select.disabled=!!this._localSpeechEntity();select.value=[...select.options].some(o=>o.value===settings.voice)?settings.voice:'auto';rate.value=String(settings.rate);test.disabled=!!this._busy||this._listening||!voices.length;
+    if(!this._voiceSettingsChanged){this._voiceSettingsChanged=()=>this._renderVoiceSettings();synth?.addEventListener?.('voiceschanged',this._voiceSettingsChanged);}
+  }
+
+
+  _sessionKey(){return 'dashboard-robot-chat:v1:'+this._preferenceKey()+':'+(this._config?.language||'da');}
+  _saveSession(){
+    if(this._busy)return;
+    try{if(!this._question){sessionStorage.removeItem(this._sessionKey());return;}sessionStorage.setItem(this._sessionKey(),JSON.stringify({time:this._chatActivity||Date.now(),id:this._conversationId,turns:(this._chatTurns||[]).map(t=>({question:t.group.querySelector('.chat-question').textContent,answer:t.answer})).slice(-20)}));}catch{}
+  }
+  _restoreSession(){
+    if(this._sessionRestored)return;this._sessionRestored=true;
+    try{const data=JSON.parse(sessionStorage.getItem(this._sessionKey())||'null');if(!data||Date.now()-data.time>1800000||!Array.isArray(data.turns))return;
+      for(const turn of data.turns.slice(-20)){if(typeof turn.question!=='string'||typeof turn.answer!=='string')continue;this._requestToken=(this._requestToken||0)+1;this._question=turn.question;this._aiAnswer=turn.answer;this._renderChatHistory();}this._conversationId=data.id||null;this._chatActivity=data.time;
+    }catch{}
+  }
+  _welcomeKey(){return 'dashboard-robot-welcome:v1:'+this._preferenceKey();}
+  _welcomeMode(){try{return localStorage.getItem(this._welcomeKey())||'speech';}catch{return 'speech';}}
+  _allowHello(){if(this._welcomeMode()!=='speech')return false;try{return Date.now()-Number(sessionStorage.getItem(this._welcomeKey()+':last')||0)>1800000;}catch{return true;}}
+  _markHello(){try{sessionStorage.setItem(this._welcomeKey()+':last',String(Date.now()));}catch{}}
+  _friendlyError(error){
+    const key=/audio_permission|NotAllowed/i.test(error)?'permission':/timeout/i.test(error)?'timeout':/quota|429|RESOURCE_EXHAUSTED/i.test(error)?'quota':/401|403|unauthor|auth/i.test(error)?'auth':/empty_response/i.test(error)?'empty':/piper|speech|voice|tts/i.test(error)?'speech':'connection';
+    const messages={
+      permission:['Browseren blokerer lyd. Tryk på Prøv stemmen for at tillade afspilning.','The browser blocked audio. Press Test voice to start playback.','Der Browser blockiert Audio. Drücke Stimme testen.'],
+      timeout:['Svaret tog for lang tid. Kontrollér forbindelsen, og prøv igen.','The response timed out. Check the connection and try again.','Die Antwort dauerte zu lange. Prüfe die Verbindung und versuche es erneut.'],
+      quota:['AI-tjenestens grænse er nået. Vent lidt, før du prøver igen.','The AI service limit was reached. Wait before trying again.','Das Limit des KI-Dienstes wurde erreicht. Bitte warte.'],
+      auth:['Adgang blev afvist. Kontrollér AI-integrationens login eller API-nøgle i Home Assistant.','Access was denied. Check the AI integration credentials in Home Assistant.','Zugriff verweigert. Prüfe die Zugangsdaten der KI-Integration in Home Assistant.'],
+      empty:['AI-tjenesten sendte et tomt svar. Prøv at formulere spørgsmålet igen.','The AI service returned an empty answer. Try rephrasing your question.','Der KI-Dienst hat leer geantwortet. Formuliere die Frage erneut.'],
+      speech:['Talen kunne ikke dannes. Kontrollér, at Piper kører, og at stemmen til det valgte sprog er hentet.','Speech generation failed. Check that Piper is running and the selected language voice is downloaded.','Spracherzeugung fehlgeschlagen. Prüfe Piper und das heruntergeladene Sprachmodell.'],
+      connection:['Ingen forbindelse til AI-tjenesten. Kontrollér netværket og AI-integrationen i Home Assistant.','Cannot connect to the AI service. Check the network and AI integration in Home Assistant.','Keine Verbindung zum KI-Dienst. Prüfe Netzwerk und KI-Integration in Home Assistant.']};
+    return messages[key][({da:0,en:1,de:2})[this._config?.language||'da']||0];
+  }
+  _renderExperience(){
+    const root=this.shadowRoot,host=root?.querySelector('.message');if(!host)return;
+    const lang=this._config?.language||'da',i=({da:0,en:1,de:2})[lang]||0;
+    let bar=root.querySelector('.robot-status');
+    if(!bar){bar=document.createElement('div');bar.className='robot-status';bar.style.cssText='display:flex;align-items:center;gap:12px;padding:8px 0;color:#a9d6e5;min-height:30px';const status=document.createElement('span');status.setAttribute('role','status');status.setAttribute('aria-live','polite');const stop=document.createElement('button');stop.type='button';stop.addEventListener('click',()=>{window.speechSynthesis?.cancel();this._finishSpeech();});bar.append(status,stop);host.prepend(bar);}
+    bar.firstChild.textContent=(this._listening?['Jeg lytter …','Listening …','Ich höre zu …']:this._busy?['Jeg tænker …','Thinking …','Ich denke nach …']:this._utterance?(this._ttsAudio||this._stage?.classList.contains?.('speaking')?['Jeg taler …','Speaking …','Ich spreche …']:['Forbereder tale …','Preparing speech …','Sprache wird vorbereitet …']):['Klar til dit spørgsmål','Ready for your question','Bereit für deine Frage'])[i];
+    bar.lastChild.textContent=['Stop oplæsning','Stop speech','Vorlesen stoppen'][i];bar.lastChild.hidden=!this._utterance;
+    const box=root.querySelector('.voice-settings');if(box&&!box.querySelector('.welcome-mode')){const label=document.createElement('label');label.textContent=['Velkomst','Greeting','Begrüßung'][i];const select=document.createElement('select');select.className='welcome-mode';select.setAttribute('aria-label',label.textContent);for(const [value,words]of [['speech',['Talt velkomst · højst hver 30. minut','Spoken greeting · at most every 30 minutes','Gesprochene Begrüßung · höchstens alle 30 Minuten']],['silent',['Velkomst uden tale','Silent greeting','Begrüßung ohne Sprache']],['off',['Ingen velkomst','No greeting','Keine Begrüßung']]]){const option=document.createElement('option');option.value=value;option.textContent=words[i];select.append(option);}select.value=this._welcomeMode();select.addEventListener('change',()=>{try{localStorage.setItem(this._welcomeKey(),select.value);}catch{}if(this._helloPending){window.speechSynthesis?.cancel();this._finishSpeech();}this._renderExperience();});label.append(select);box.append(label);}
+    if(!this._question){const bubble=root.querySelector('.bubble');if(bubble)bubble.hidden=this._welcomeMode()==='off';}
   }
 
   _robotName(){return String(this._config?.robot_name||'').trim().slice(0,60)||'Huself Kræz';}
@@ -219,7 +258,7 @@ class DashboardRobot extends HTMLElement {
   }
 
   _sayHello(){
-    if(this._helloDone||this._helloPending||!this.isConnected||!this._visible||this._busy||this._listening||this._question||document.visibilityState==='hidden')return;
+    if(!this._allowHello()||this._helloDone||this._helloPending||!this.isConnected||!this._visible||this._busy||this._listening||this._question||document.visibilityState==='hidden')return;
     if(this._localSpeechEntity()){const name=this._robotName(),lang=this._config?.language||'da';this._speakLocal(({da:'Hej! Jeg er '+name+'. Hvad kan jeg hjælpe dig med?',en:'Hello! I am '+name+'. How can I help you?',de:'Hallo! Ich bin '+name+'. Wie kann ich dir helfen?'})[lang],true);return;}
     const synth=window.speechSynthesis;if(!synth||!window.SpeechSynthesisUtterance)return;
     const language=this._config?.language||'da',locale=({da:'da-DK',en:'en-GB',de:'de-DE'})[language]||'en-GB';
@@ -228,7 +267,7 @@ class DashboardRobot extends HTMLElement {
     if(this._utterance||synth.speaking)return;
     const name=this._robotName();const u=new window.SpeechSynthesisUtterance(({da:'Hej! Jeg er '+name+'. Hvad kan jeg hjælpe dig med?',en:'Hello! I am '+name+'. How can I help you?',de:'Hallo! Ich bin '+name+'. Wie kann ich dir helfen?'})[language]||'Hello! I am '+name+'. How can I help you?');
     u.lang=locale;u.voice=voice;u.rate=this._voiceSettings().rate;this._helloPending=true;this._utterance=u;
-    u.onstart=()=>{this._helloDone=true;this._helloPending=false;this._stage?.classList.add('speaking');this._refreshExpression();this._clearHelloListeners();};
+    u.onstart=()=>{this._helloDone=true;this._markHello();this._helloPending=false;this._stage?.classList.add('speaking');this._refreshExpression();this._renderExperience();this._clearHelloListeners();};
     u.onend=()=>{this._helloPending=false;if(this._utterance===u)this._finishSpeech();};
     u.onerror=e=>{this._helloPending=false;if(this._utterance===u)this._finishSpeech();if(e.error==='not-allowed'&&!this._helloDone)this._helloOnInteraction();};
     try{synth.speak(u);}catch{this._helloPending=false;if(this._utterance===u)this._finishSpeech();this._helloOnInteraction();}
@@ -395,6 +434,7 @@ class DashboardRobot extends HTMLElement {
 
   async _ask(question,readAloud=false) {
     const text=String(question||'').trim().slice(0,1000);if(!text||this._busy)return;
+    this._chatActivity=Date.now();
     if(this._recognition)this._stopListening();
     if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}
     const token=(this._requestToken||0)+1;this._requestToken=token;this._question=text;this._voiceReply=false;this._aiAnswer='Jeg tænker …';this._busy=true;this._update();
@@ -425,7 +465,7 @@ class DashboardRobot extends HTMLElement {
     }catch(error){
       if(token!==this._requestToken)return;
       const errorText=String(error?.message||error||'');
-      this._aiAnswer=/quota|429|rate|resource.exhausted/i.test(errorText)?'AI-tjenestens grænse er nået lige nu. Vent lidt, og prøv igen.':/robot_timeout/.test(errorText)?'Svaret tog for lang tid. Prøv igen om lidt.':'Jeg kunne ikke få forbindelse til AI-tjenesten. Prøv igen om lidt.';
+      this._aiAnswer=this._friendlyError(errorText);
       this._conversationId=null;
     }finally{
       clearTimeout(timeout);
@@ -543,7 +583,7 @@ class DashboardRobot extends HTMLElement {
     if(changed)log.scrollTop=log.scrollHeight;
   }
 
-  _update(){this._renderOriginal();this._renderChatHistory();this._localize();this._applyCapabilities();this._applyRobotName();this._renderVoiceSettings();}
+  _update(){this._restoreSession();this._renderOriginal();this._renderChatHistory();this._localize();this._applyCapabilities();this._applyRobotName();this._renderVoiceSettings();this._renderExperience();this._saveSession();}
   _commandText(text){
     let q=String(text||'').trim();if(this._language()==='da')return q;
     const replacements=[[/^(?:can|could|would) you\s+/i,''],[/^kannst du\s+/i,''],[/^turn on (?:the )?lights?/i,'tænd lys'],[/^turn off (?:the )?lights?/i,'sluk lys'],[/^dim (?:the )?lights? to (\d+)\s*(?:percent|%)/i,'dæmp lyset til $1 procent'],[/^(?:play|resume) (?:the )?music/i,'spil musik'],[/^pause (?:the )?music/i,'pause musik'],[/^turn (?:the )?volume (up|down)/i,(_,d)=>d.toLowerCase()==='up'?'skru op':'skru ned'],[/^(?:show|open) (?:me )?(?:the )?camera/i,'åbn kamera'],[/^(add|remove)\s+(GLS|PostNord|DHL|Bring|DAO)[- ]+(?:parcel|tracking)\s+/i,(_,a,c)=>(a.toLowerCase()==='add'?'tilføj':'fjern')+' '+c+' pakke '],[/\s+in (?:the )?/i,' i '],[/^(?:zeige|zeig|öffne) (?:mir )?(?:die )?kamera/i,'åbn kamera'],[/^licht (?:im|in) (.+) einschalten$/i,'tænd lys i $1'],[/^licht (?:im|in) (.+) ausschalten$/i,'sluk lys i $1'],[/^musik (?:im|in) (.+) (?:abspielen|fortsetzen)$/i,'spil musik i $1'],[/^musik (?:im|in) (.+) pausieren$/i,'pause musik i $1'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) hinzufügen$/i,'tilføj $1 pakke $2'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) entfernen$/i,'fjern $1 pakke $2']];
@@ -666,7 +706,7 @@ class DashboardRobot extends HTMLElement {
   }
   _resetConversation() {
     if(this._recognition)this._stopListening();
-    this._requestToken=(this._requestToken||0)+1;this._busy=false;this._question='';this._aiAnswer='';this._conversationId=null;this._pendingParcel=null;
+    this._requestToken=(this._requestToken||0)+1;this._busy=false;this._question='';this._aiAnswer='';this._conversationId=null;this._pendingParcel=null;this._chatTurns=[];try{sessionStorage.removeItem(this._sessionKey());}catch{}
     if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}
     this.shadowRoot.querySelector('input').value='';this._update();
   }
@@ -704,10 +744,10 @@ class DashboardRobot extends HTMLElement {
     const utterance=new window.SpeechSynthesisUtterance(this._translate(this._spokenAnswer||''));utterance.lang=this._locale();utterance.voice=voice;utterance.rate=this._voiceSettings().rate;this._utterance=utterance;
     utterance.onend=()=>{if(this._utterance===utterance)this._finishSpeech();};
     utterance.onerror=e=>{if(this._utterance===utterance){this._finishSpeech();if(!['canceled','interrupted'].includes(e.error))note.textContent='Oplæsningen kunne ikke starte. Prøv igen.';}};
-    note.textContent='';this.shadowRoot.querySelector('.speak').textContent='■ Stop oplæsning';this.shadowRoot.querySelector('.stage').classList.add('speaking');this._refreshExpression();
+    note.textContent='';this.shadowRoot.querySelector('.speak').textContent='■ Stop oplæsning';this.shadowRoot.querySelector('.stage').classList.add('speaking');this._refreshExpression();this._renderExperience();
     try{synth.cancel();synth.speak(utterance);}catch{this._finishSpeech();note.textContent='Oplæsningen kunne ikke starte.';}
   }
-  _finishSpeech(){this._helloPending=false;if(this._ttsAudio){this._ttsAudio.onended=null;this._ttsAudio.onerror=null;this._ttsAudio.onplaying=null;this._ttsAudio.pause();this._ttsAudio.removeAttribute('src');this._ttsAudio=null;}this._utterance=null;this.shadowRoot.querySelector('.speak').textContent='🔊 Læs højt';this.shadowRoot.querySelector('.stage').classList.remove('speaking');this._refreshExpression();}
+  _finishSpeech(){this._helloPending=false;if(this._ttsAudio){this._ttsAudio.onended=null;this._ttsAudio.onerror=null;this._ttsAudio.onplaying=null;this._ttsAudio.pause();this._ttsAudio.removeAttribute('src');this._ttsAudio=null;}this._utterance=null;this.shadowRoot.querySelector('.speak').textContent='🔊 Læs højt';this.shadowRoot.querySelector('.stage').classList.remove('speaking');this._refreshExpression();this._renderExperience();}
   disconnectedCallback(){if(this._voiceSettingsChanged){window.speechSynthesis?.removeEventListener?.('voiceschanged',this._voiceSettingsChanged);this._voiceSettingsChanged=null;}clearTimeout(this._helloTimer);this._helloTimer=null;clearTimeout(this._danceTimer);this._danceTimer=null;this._helloPending=false;this._clearHelloListeners();this._languageObserver?.disconnect();this._closeRobotChat();if(this._onRobotResize)window.removeEventListener('resize',this._onRobotResize);if(this._recognition)this._stopListening();this._requestToken=(this._requestToken||0)+1;this._busy=false;if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}}
 
   _model(states,requestedCarriers=[]) {
