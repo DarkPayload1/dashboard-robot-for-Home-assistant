@@ -62,7 +62,7 @@ class DashboardRobot extends HTMLElement {
 .chat-read{display:block;margin-top:10px;border:0;background:#ffffff0b;color:#8ddbe9;font-size:11px;padding:6px 10px}
 .chat-read:disabled{display:none}
 .dialog-content .actions{margin:10px 0 14px;justify-content:flex-end}
-.dialog-content .actions .hide-robot{display:none}
+.dialog-content .actions .hide-robot{display:inline-flex;margin-left:0;align-items:center;gap:6px}
 .dialog-content .chat{border-top:1px solid #82c9df1c;padding-top:16px;margin-top:8px}
 .dialog-content .chat label{font-size:12px;margin-bottom:10px}
 .dialog-content .input-row{align-items:stretch;gap:9px}

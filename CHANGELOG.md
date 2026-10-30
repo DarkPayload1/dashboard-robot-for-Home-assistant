@@ -1,3 +1,13 @@
+# 1.7.2-rc.1
+
+## Dansk
+
+- Gendanner Skjul robot-knappen i chatvinduet. Robotten kan skjules og åbnes igen med Vis robot-knappen i hjørnet.
+
+## English
+
+- Restores the Hide robot button in the chat window. Hide the robot and reopen it using the Show robot button in the corner.
+
 # 1.7.1-rc.1
 
 ## Dansk
