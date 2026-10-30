@@ -1,3 +1,17 @@
+# 1.7.7-rc.1
+
+## Dansk
+
+- Vælger en særskilt Piper-stemme til hvert sprog: Talesyntese på dansk, Cori på engelsk og Thorsten på tysk.
+- Sender både sprog og stemmemodel, så engelske og tyske svar ikke bruger den danske standardstemme.
+- Gælder både velkomst og oplæsning af svar. Piper kan hente stemmemodellen ved første brug.
+
+## English
+
+- Selects a separate Piper voice for each language: Talesyntese for Danish, Cori for English and Thorsten for German.
+- Sends both language and voice model so English and German no longer use the Danish default voice.
+- Applies to greetings and answer playback. Piper may download the voice model on first use.
+
 # 1.7.6-rc.1
 
 ## Dansk

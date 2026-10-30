@@ -1,3 +1,3 @@
 DOMAIN = "dashboard_robot"
-VERSION = "1.7.6-rc.1"
-FRONTEND_SCRIPT = "robot.2c231feaa899.js"
+VERSION = "1.7.7-rc.1"
+FRONTEND_SCRIPT = "robot.cc1013823cb0.js"

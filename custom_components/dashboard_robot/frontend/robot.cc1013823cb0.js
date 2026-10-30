@@ -132,6 +132,15 @@ class DashboardRobot extends HTMLElement {
     const configured=this._config?.tts_entity;if(configured)return configured;
     return Object.keys(this._hass?.states||{}).find(id=>id.startsWith('tts.')&&/piper/i.test(id+' '+(this._hass.states[id].attributes?.friendly_name||'')))||null;
   }
+
+  _localSpeechOptions(engine){
+    const label=engine+' '+(this._hass?.states?.[engine]?.attributes?.friendly_name||'');
+    if(!/piper/i.test(label))return {};
+    const voice=({da:'da_DK-talesyntese-medium',en:'en_GB-cori-medium',de:'de_DE-thorsten-medium'})[this._config?.language||'da'];
+    if(!voice)throw new Error('No Piper voice for selected language');
+    return {voice};
+  }
+
   async _speakLocal(text,greeting=false){
     if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();return;}
     const engine=this._localSpeechEntity();if(!engine)return;
@@ -139,7 +148,7 @@ class DashboardRobot extends HTMLElement {
     const note=this.shadowRoot?.querySelector('.voice-note');let timer;
     try{
       const language=({da:'da_DK',en:'en_GB',de:'de_DE'})[this._config?.language||'da'];
-      const response=await Promise.race([this._hass.callApi('POST','tts_get_url',{engine_id:engine,message:text,language,cache:true}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Speech timeout')),20000);})]);
+      const response=await Promise.race([this._hass.callApi('POST','tts_get_url',{engine_id:engine,message:text,language,options:this._localSpeechOptions(engine),cache:true}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Speech timeout')),20000);})]);
       if(this._utterance!==marker||!this.isConnected||!this._visible)return;
       if(typeof response.path!=='string'||!response.path.startsWith('/api/tts_proxy/'))throw new Error('Invalid speech path');
       const audio=new Audio(response.path);this._ttsAudio=audio;
@@ -196,7 +205,7 @@ class DashboardRobot extends HTMLElement {
     box.querySelector('.voice-settings-title').textContent=words[0];
     const select=box.querySelector('.voice-select'),rate=box.querySelector('.voice-rate'),test=box.querySelector('.voice-test'),settings=this._voiceSettings();
     select.setAttribute('aria-label',words[0]);rate.setAttribute('aria-label',words[2]);test.textContent=words[3];
-    const voices=this._localSpeechEntity()?[{voiceURI:'local-piper',name:'Piper · Home Assistant',lang,localService:true}]:synth.getVoices().filter(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang),signature=JSON.stringify([lang,voices.map(v=>[v.voiceURI,v.name])]);
+    const voices=this._localSpeechEntity()?[{voiceURI:'local-piper',name:'Piper · '+({da:'Dansk',en:'English',de:'Deutsch'}[lang]||lang),lang,localService:true}]:synth.getVoices().filter(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang),signature=JSON.stringify([lang,voices.map(v=>[v.voiceURI,v.name])]);
     if(select.dataset.signature!==signature){select.dataset.signature=signature;select.replaceChildren();const auto=document.createElement('option');auto.value='auto';auto.textContent=words[1];select.append(auto);for(const v of voices){const o=document.createElement('option');o.value=v.voiceURI||v.name;o.textContent=v.name+' ('+v.lang+')';select.append(o);}}
     select.value=[...select.options].some(o=>o.value===settings.voice)?settings.voice:'auto';rate.value=String(settings.rate);test.disabled=!!this._busy||this._listening||!voices.length;
     if(!this._voiceSettingsChanged){this._voiceSettingsChanged=()=>this._renderVoiceSettings();synth.addEventListener?.('voiceschanged',this._voiceSettingsChanged);}
