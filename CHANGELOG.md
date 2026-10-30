@@ -1,7 +1,14 @@
 # 1.7.0-rc.12
 
+## Dansk
+
 - Ny hvid robotfigur med blå øjne og gennemsigtig baggrund.
 - Let svævende animation og lysglød ved tale og lytning. Figuren bruger et statisk billede uden separate mund- og øjenbevægelser.
+
+## English
+
+- New white robot character with blue eyes and a transparent background.
+- Gentle floating animation and a glow while speaking or listening. The character uses a static image without separate mouth or eye movements.
 
 # 1.7.0-rc.11
 
