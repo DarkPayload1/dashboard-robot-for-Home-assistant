@@ -1,3 +1,9 @@
+# 1.7.0-rc.6
+
+- Tilføjer visning af Bring- og DHL-pakker samt svar filtreret efter transportør.
+- DHL-pakker kan tilføjes og fjernes gennem robotten. Bring hentes automatisk fra kontoen; robotten forklarer, at manuel tilføjelse ikke understøttes.
+- Pakkekilder bruger integrationens identitet og sensorrolle, så omdøbte sensorer også genkendes.
+
 # 1.7.0-rc.5
 
 - Robotten starter med en generel velkomst, også når pakkesporing er valgt. Pakkestatus vises ved spørgsmål om pakker eller åbning af pakkeoversigten.

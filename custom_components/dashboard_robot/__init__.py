@@ -44,6 +44,8 @@ def _entry_config(hass,entry):
     entities, devices, areas = er.async_get(hass), dr.async_get(hass), ar.async_get(hass)
     lights, speakers = {}, {}
     camera_labels={}
+    parcel_sources=[]
+    selected_packages=set(cfg.get("package_entities") or [])
     fuel_entities=set([cfg['fuel_entity']] if cfg.get('fuel_entity') else [])
     selected_integrations=set(cfg.get('integration_ids') or [])
     allowed_cameras=set(cfg.get('camera_entities') or ([cfg['camera_entity']] if cfg.get('camera_entity') else []))
@@ -57,6 +59,16 @@ def _entry_config(hass,entry):
         unit=str(attrs.get('unit_of_measurement','')).casefold()
         if getattr(entity,'config_entry_id',None) in selected_integrations and entity_id.startswith('sensor.') and ('/l' in unit or any(word in label for word in ['benzin','diesel','petrol','octane','oktan','blyfri','e10','e5'])):
             fuel_entities.add(entity_id)
+        if entity_id in selected_packages:
+            source_entry=hass.config_entries.async_get_entry(entity.config_entry_id)
+            domain=source_entry.domain if source_entry else None
+            carrier={'gls':'GLS','postnord':'PostNord','dhl':'DHL','posten_bring':'Bring'}.get(domain)
+            role=getattr(entity,'translation_key',None) or ''
+            text=(role+' '+entity_id).casefold()
+            kind='pickup' if any(v in text for v in ['awaiting_pickup','klar_til_afhentning']) else 'delivered' if any(v in text for v in ['delivered_parcels','leverede_pakker']) else 'incoming' if any(v in text for v in ['incoming_parcels','indkommende_pakker']) else None
+            outgoing=any(v in text for v in ['outgoing','udgaende'])
+            if carrier and kind and not outgoing:
+                parcel_sources.append({'entity':entity_id,'carrier':carrier,'kind':kind,'domain':domain,'config_entry_id':entity.config_entry_id,'can_track':hass.services.has_service(domain,'track_parcel'),'can_untrack':hass.services.has_service(domain,'untrack_parcel')})
         device = devices.devices.get(entity.device_id) if entity.device_id else None
         area_id = entity.area_id or (device.area_id if device else None)
         area = areas.async_get_area(area_id) if area_id else None
@@ -78,4 +90,4 @@ def _entry_config(hass,entry):
         key = {'gange':'gang'}.get(key, key)
         if entity_id in allowed_lights:
             lights.setdefault(key, []).append(entity_id)
-    return {**cfg, 'fuel_entities': sorted(fuel_entities), 'camera_labels': camera_labels, 'profile_id': entry.entry_id, 'controls': {'lights': lights, 'speakers': speakers}}
+    return {**cfg, 'parcel_sources': sorted(parcel_sources,key=lambda s:{'pickup':0,'incoming':1,'delivered':2}[s['kind']]), 'fuel_entities': sorted(fuel_entities), 'camera_labels': camera_labels, 'profile_id': entry.entry_id, 'controls': {'lights': lights, 'speakers': speakers}}
