@@ -1,5 +1,8 @@
 # Dashboard Robot
 
+[![Open Dashboard Robot in your Home Assistant Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=DarkPayload1&repository=dashboard-robot-for-Home-assistant&category=integration)
+
+
 A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
 
 **First public preview: v1.7.10-rc.1.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
@@ -105,6 +108,12 @@ Without an AI assistant, supported basic commands and configured sensor answers 
 **Dansk:** Vil du bruge fri AI-samtale, skal du først tilføje **Google Gemini / Google Generative AI** eller en anden kompatibel AI-assistent i Home Assistant. Vælg derefter **Google AI Conversation** under **Dashboard Robot → Konfigurer → Robot → AI-assistent**, og gem opsætningen. Grundfunktionerne virker uden AI. Du skal bruge din egen API-nøgle til Gemini.
 
 ## Install with HACS
+
+[![Open Dashboard Robot in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=DarkPayload1&repository=dashboard-robot-for-Home-assistant&category=integration)
+
+**English:** The button at the top opens the Marketplace in Home Assistant 2026.11 or newer. Use the HACS button above on older installations. If the repository is not found, add it as a custom repository using the steps below. Each reader chooses their own Home Assistant address through My Home Assistant.
+
+**Dansk:** Knappen øverst åbner Marketplace i Home Assistant 2026.11 eller nyere. Brug HACS-knappen ovenfor på ældre installationer. Hvis projektet ikke findes, skal du først tilføje det som et brugerdefineret repository med trinnene nedenfor. My Home Assistant bruger hver læsers egen Home Assistant-adresse.
 
 This is a **custom repository**, not an entry in the HACS default catalogue.
 
