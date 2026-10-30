@@ -176,3 +176,40 @@ Select the Bring or DHL integration and its incoming, awaiting-pickup and delive
 Vælg Bring- eller DHL-integrationen og dens pakkesensorer i robotindstillingerne. Robotten kan vise pakker fra begge transportører og tilføje/fjerne DHL-sporing. Bring-pakker hentes automatisk fra din konto; manuel tilføjelse og fjernelse understøttes ikke.
 
 DAO is also supported for reading account parcels. Like Bring, its account integration does not offer manual tracking changes through the robot. Select its parcel sensors in robot settings. / DAO-pakker kan også vises, når DAO-pakkesensorerne er valgt. Manuel tilføjelse foretages i DAO-appen.
+
+
+## Local voices without a subscription / Lokale stemmer uden abonnement
+
+Dashboard Robot uses a separate Piper model for each selected language:
+
+| Robot language / Sprog | Piper voice / Stemme | Model |
+| --- | --- | --- |
+| Dansk | Talesyntese | `da_DK-talesyntese-medium` |
+| English | Cori | `en_GB-cori-medium` |
+| Deutsch | Thorsten | `de_DE-thorsten-medium` |
+
+### Dansk
+
+1. Installér **Piper** under Home Assistant → Indstillinger → Apps.
+2. Vælg `da_DK-talesyntese-medium` som stemme, og start Piper.
+3. Tilføj den fundne **Wyoming/Piper**-integration under Enheder og tjenester.
+4. Opdatér Dashboard Robot, genstart Home Assistant og genindlæs dashboardet.
+5. Vælg dansk, engelsk eller tysk under Dashboard Robot → Konfigurer → Robot. Robotten sender både sprog og den tilhørende stemmemodel til Piper.
+6. Prøv **Stemme og taletempo → Prøv stemmen**. Første brug af en ny model kan tage længere, mens den hentes.
+
+Hvis modellerne ikke bliver hentet ved første oplæsning: vælg først `en_GB-cori-medium` i Piper-appens indstillinger og genstart Piper; vent på **Ready** i loggen. Gentag med `de_DE-thorsten-medium`. Vælg derefter din ønskede standardstemme igen og genstart Piper. De hentede modeller bliver liggende, og robotten kan vælge dem pr. sprog.
+
+Stemmefilerne hentes til **din egen Home Assistant-installation** og er ikke inkluderet i robot-ZIP-filen. Der kræves ikke Nabu Casa-abonnement. Browseren kan kræve et tryk før lydafspilning.
+
+### English
+
+1. Install **Piper** under Home Assistant → Settings → Apps.
+2. Select `da_DK-talesyntese-medium` and start Piper.
+3. Add the discovered **Wyoming/Piper** integration under Devices & services.
+4. Update Dashboard Robot, restart Home Assistant and refresh the dashboard.
+5. Choose Danish, English or German in Dashboard Robot → Configure → Robot. The robot sends both the language and the matching voice model to Piper.
+6. Use **Voice and speed → Test voice**. First use may take longer while a new model downloads.
+
+If a model does not download during first playback, select `en_GB-cori-medium` in the Piper app settings and restart Piper; wait for **Ready** in its logs. Repeat with `de_DE-thorsten-medium`. Finally restore your preferred default voice and restart Piper. Downloaded models remain available for per-language selection.
+
+Voice models download to **each user's Home Assistant installation**; they are not bundled in the robot ZIP. No Nabu Casa subscription is required. Browser playback may require a user gesture.

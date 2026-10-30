@@ -1,3 +1,17 @@
+# 1.7.8-rc.1
+
+## Dansk
+
+- Tilføjer en komplet opsætningsvejledning til lokal dansk, engelsk og tysk Piper-tale uden Nabu Casa.
+- Beskriver hentning af alle tre modeller: Talesyntese, Cori og Thorsten. Modeller hentes pr. Home Assistant-installation og er ikke inkluderet i robot-ZIP-filen.
+- Bevarer sprogafhængigt stemmevalg fra 1.7.7-rc.1. Denne udgivelse ændrer dokumentation og versionsnummer, ikke afspilningskoden.
+
+## English
+
+- Adds full setup instructions for local Danish, English and German Piper speech without Nabu Casa.
+- Documents downloading all three models: Talesyntese, Cori and Thorsten. Models are downloaded per Home Assistant installation and are not bundled in the robot ZIP.
+- Keeps language-specific voice selection from 1.7.7-rc.1. This release updates documentation and version metadata, not playback code.
+
 # 1.7.7-rc.1
 
 ## Dansk
