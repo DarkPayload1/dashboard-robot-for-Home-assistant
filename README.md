@@ -21,6 +21,19 @@ Installed integrations are discovered through registered entities. Suggestions u
 
 Home Assistant 2026.10 or newer and a modern browser. Voice input requires HTTPS, microphone permission and browser speech-recognition support. Reading aloud requires a suitable voice installed on the device. AI requires your own configured conversation integration. Text and supported local commands can be used without AI.
 
+## AI chat: set up Google Gemini first
+
+**For free-form AI conversation, first add Google Gemini (Google Generative AI) or another compatible conversation integration to Home Assistant.** Dashboard Robot does not install an AI provider or include an API key.
+
+1. Open **Settings → Devices & services → Add integration → Google Gemini**.
+2. Follow the setup instructions using your own Google AI API key. See the [official Gemini setup guide](https://www.home-assistant.io/integrations/google_generative_ai_conversation/).
+3. Open **Dashboard Robot → Configure → Robot** and select its conversation entity under **AI assistant**, for example **Google AI Conversation**.
+4. Complete the setup and save.
+
+Without an AI assistant, supported basic commands and configured sensor answers still work; general AI chat is unavailable.
+
+**Dansk:** Vil du bruge fri AI-samtale, skal du først tilføje **Google Gemini / Google Generative AI** eller en anden kompatibel AI-assistent i Home Assistant. Vælg derefter **Google AI Conversation** under **Dashboard Robot → Konfigurer → Robot → AI-assistent**, og gem opsætningen. Grundfunktionerne virker uden AI. Du skal bruge din egen API-nøgle til Gemini.
+
 ## Install with HACS
 
 This is a **custom repository**, not an entry in the HACS default catalogue.
