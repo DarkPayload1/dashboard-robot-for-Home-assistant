@@ -2,7 +2,7 @@
 
 A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
 
-**First public preview: v1.7.0-rc.6.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
+**First public preview: v1.7.0-rc.7.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
 
 ## Screenshots / Billeder
 
@@ -174,3 +174,5 @@ MIT licensed. See [LICENSE](LICENSE).
 Select the Bring or DHL integration and its incoming, awaiting-pickup and delivered parcel sensors in Dashboard Robot settings. Ask about one carrier or all parcels. DHL supports adding and removing tracking numbers through the robot; removal requires confirmation. The Posten Bring account integration imports parcels automatically and does not support manual tracking changes.
 
 Vælg Bring- eller DHL-integrationen og dens pakkesensorer i robotindstillingerne. Robotten kan vise pakker fra begge transportører og tilføje/fjerne DHL-sporing. Bring-pakker hentes automatisk fra din konto; manuel tilføjelse og fjernelse understøttes ikke.
+
+DAO is also supported for reading account parcels. Like Bring, its account integration does not offer manual tracking changes through the robot. Select its parcel sensors in robot settings. / DAO-pakker kan også vises, når DAO-pakkesensorerne er valgt. Manuel tilføjelse foretages i DAO-appen.

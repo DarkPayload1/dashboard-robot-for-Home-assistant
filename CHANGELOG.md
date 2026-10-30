@@ -1,3 +1,9 @@
+# 1.7.0-rc.7
+
+- Retter pakkesvar til at bruge den transportør, der spørges om, og bede tydeligt om manglende pakkenummer på dansk, engelsk og tysk.
+- Tilføjer DAO-visning og forklarer, at DAO og Bring importerer pakker fra kontoen uden manuel tilføjelse gennem robotten.
+- Spørgsmål uden transportør viser kun brugerens valgte transportører.
+
 # 1.7.0-rc.6
 
 - Tilføjer visning af Bring- og DHL-pakker samt svar filtreret efter transportør.

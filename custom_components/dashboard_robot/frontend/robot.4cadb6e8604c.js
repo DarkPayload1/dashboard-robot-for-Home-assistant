@@ -336,41 +336,47 @@ class DashboardRobot extends HTMLElement {
   _update(){this._renderOriginal();this._localize();this._applyCapabilities();}
   _commandText(text){
     let q=String(text||'').trim();if(this._language()==='da')return q;
-    const replacements=[[/^(?:can|could|would) you\s+/i,''],[/^kannst du\s+/i,''],[/^turn on (?:the )?lights?/i,'tænd lys'],[/^turn off (?:the )?lights?/i,'sluk lys'],[/^dim (?:the )?lights? to (\d+)\s*(?:percent|%)/i,'dæmp lyset til $1 procent'],[/^(?:play|resume) (?:the )?music/i,'spil musik'],[/^pause (?:the )?music/i,'pause musik'],[/^turn (?:the )?volume (up|down)/i,(_,d)=>d.toLowerCase()==='up'?'skru op':'skru ned'],[/^(?:show|open) (?:me )?(?:the )?camera/i,'åbn kamera'],[/^(add|remove)\s+(GLS|PostNord|DHL|Bring)[- ]+(?:parcel|tracking)\s+/i,(_,a,c)=>(a.toLowerCase()==='add'?'tilføj':'fjern')+' '+c+' pakke '],[/\s+in (?:the )?/i,' i '],[/^(?:zeige|zeig|öffne) (?:mir )?(?:die )?kamera/i,'åbn kamera'],[/^licht (?:im|in) (.+) einschalten$/i,'tænd lys i $1'],[/^licht (?:im|in) (.+) ausschalten$/i,'sluk lys i $1'],[/^musik (?:im|in) (.+) (?:abspielen|fortsetzen)$/i,'spil musik i $1'],[/^musik (?:im|in) (.+) pausieren$/i,'pause musik i $1'],[/^(GLS|PostNord|DHL|Bring)[- ]paket (\w+) hinzufügen$/i,'tilføj $1 pakke $2'],[/^(GLS|PostNord|DHL|Bring)[- ]paket (\w+) entfernen$/i,'fjern $1 pakke $2']];
+    const replacements=[[/^(?:can|could|would) you\s+/i,''],[/^kannst du\s+/i,''],[/^turn on (?:the )?lights?/i,'tænd lys'],[/^turn off (?:the )?lights?/i,'sluk lys'],[/^dim (?:the )?lights? to (\d+)\s*(?:percent|%)/i,'dæmp lyset til $1 procent'],[/^(?:play|resume) (?:the )?music/i,'spil musik'],[/^pause (?:the )?music/i,'pause musik'],[/^turn (?:the )?volume (up|down)/i,(_,d)=>d.toLowerCase()==='up'?'skru op':'skru ned'],[/^(?:show|open) (?:me )?(?:the )?camera/i,'åbn kamera'],[/^(add|remove)\s+(GLS|PostNord|DHL|Bring|DAO)[- ]+(?:parcel|tracking)\s+/i,(_,a,c)=>(a.toLowerCase()==='add'?'tilføj':'fjern')+' '+c+' pakke '],[/\s+in (?:the )?/i,' i '],[/^(?:zeige|zeig|öffne) (?:mir )?(?:die )?kamera/i,'åbn kamera'],[/^licht (?:im|in) (.+) einschalten$/i,'tænd lys i $1'],[/^licht (?:im|in) (.+) ausschalten$/i,'sluk lys i $1'],[/^musik (?:im|in) (.+) (?:abspielen|fortsetzen)$/i,'spil musik i $1'],[/^musik (?:im|in) (.+) pausieren$/i,'pause musik i $1'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) hinzufügen$/i,'tilføj $1 pakke $2'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) entfernen$/i,'fjern $1 pakke $2']];
     for(const [pattern,replacement] of replacements)q=q.replace(pattern,replacement);return q;
   }
   _isCameraCommand(text) {
     const q=this._commandText(text).trim().replace(/[.!?]+$/,'');
     return /^(?:(?:kan|vil) du\s+)?(?:(?:lige|venligst|godt)\s+)*(?:åbn(?:e)?|vis(?:e)?)\s+(?:mig\s+)?(?:lige\s+)?(?:mit\s+|mine\s+|et\s+|alle\s+)?(?:kamera(?:et|er|erne|oversigten)?|stuekamera(?:et)?)(?:\s+(?:i|fra|til)\s+(?:min\s+)?(?:stue|stuen))?(?:\s+(?:tak|nu|venligst))?$/i.test(q);
   }
-  _parcelCarriers(text) {return ['GLS','PostNord','DHL','Bring'].filter(c=>new RegExp('\\b'+(c==='PostNord'?'post\\s*nord':c)+'\\b','i').test(text));}
-  _isParcelQuestion(text) {return /pakke|parcel|package|paket|\bgls\b|post\s*nord|\bdhl\b|\bbring\b/i.test(text);}
+  _parcelCarriers(text) {return ['GLS','PostNord','DHL','Bring','DAO'].filter(c=>new RegExp('\\b'+(c==='PostNord'?'post\\s*nord':c)+'\\b','i').test(text));}
+  _isParcelQuestion(text) {return /pakke|parcel|package|paket|\bgls\b|post\s*nord|\bdhl\b|\bbring\b|\bdao\b/i.test(text);}
   _parcelTarget(carrier,action) {
+    if(['Bring','DAO'].includes(carrier))return {error:({da:carrier+'-pakker hentes automatisk fra din konto. Tilføj pakken i '+carrier+'-appen, hvis den mangler, og vælg '+carrier+'-pakkesensorerne i robotindstillingerne. Robotten kan ikke tilføje eller fjerne dem manuelt.',en:carrier+' parcels are imported automatically from your account. If a parcel is missing, add it in the '+carrier+' app and select the '+carrier+' parcel sensors in robot settings. The robot cannot add or remove them manually.',de:carrier+'-Pakete werden automatisch aus deinem Konto geladen. Fehlt ein Paket, füge es in der '+carrier+'-App hinzu und wähle die '+carrier+'-Paketsensoren in den Robotereinstellungen. Der Roboter kann sie nicht manuell hinzufügen oder entfernen.'})[this._language()]};
     const sources=(this._config.sources||[]).filter(s=>s.carrier===carrier);
     if(!sources.length)return {error:({da:'Vælg først pakkesensorer for '+carrier+' i robotindstillingerne.',en:'First select '+carrier+' parcel sensors in robot settings.',de:'Wähle zuerst '+carrier+'-Paketsensoren in den Robotereinstellungen.'})[this._language()]};
-    const domain={GLS:'gls',PostNord:'postnord',DHL:'dhl',Bring:'posten_bring'}[carrier];
+    const domain={GLS:'gls',PostNord:'postnord',DHL:'dhl',Bring:'posten_bring',DAO:'dao'}[carrier];
     const allowed=sources.filter(s=>action==='track_parcel'?s.can_track!==false:s.can_untrack!==false);
-    const supported=carrier!=='Bring'&&allowed.length&&(!this._hass?.services||!!this._hass.services[domain]?.[action]);
-    if(!supported)return {error:({da:carrier+' henter pakker fra din konto. Manuel tilføjelse og fjernelse understøttes ikke af den valgte integration.',en:carrier+' imports parcels from your account. The selected integration does not support manual tracking changes.',de:carrier+' lädt Pakete aus deinem Konto. Die ausgewählte Integration unterstützt keine manuellen Änderungen der Sendungsverfolgung.'})[this._language()]};
+    const supported=!['Bring','DAO'].includes(carrier)&&allowed.length&&(!this._hass?.services||!!this._hass.services[domain]?.[action]);
+    if(!supported)return {error:({da:'Den valgte '+carrier+'-integration har ikke den nødvendige handling til at ændre pakkesporing.',en:'The selected '+carrier+' integration does not offer the action needed to change parcel tracking.',de:'Die ausgewählte '+carrier+'-Integration bietet die benötigte Aktion zum Ändern der Sendungsverfolgung nicht an.'})[this._language()]};
     const entries=[...new Set(allowed.map(s=>s.config_entry_id).filter(Boolean))];
     if(entries.length>1)return {error:({da:'Vælg kun én '+carrier+'-konto i robotindstillingerne, før du ændrer sporing.',en:'Select only one '+carrier+' account in robot settings before changing tracking.',de:'Wähle nur ein '+carrier+'-Konto in den Robotereinstellungen, bevor du die Sendungsverfolgung änderst.'})[this._language()]};
     return {domain,...(entries.length?{config_entry_id:entries[0]}:{})};
   }
   _parseParcelCommand(text) {
     text=this._commandText(text);const q=text.toLocaleLowerCase('da-DK');
-    const remove=/\b(?:slet|slette|fjern|fjerne|afmeld)\b/.test(q),add=/\b(?:tilføj|tilføje|tilmeld|registrer|registrere|indsæt)\b|(?:sæt|læg)\s+(?:en\s+)?pakke\s+ind/.test(q);
+    const remove=/\b(?:slet|slette|fjern|fjerne|afmeld|remove|entfernen)\b/.test(q),add=/\b(?:tilføj|tilføje|tilmeld|registrer|registrere|indsæt|add)\b|hinzufügen|hinzufuegen|(?:sæt|læg)\s+(?:en\s+)?pakke\s+ind/.test(q);
     if(!(remove||add)||!this._isParcelQuestion(q))return null;
     const carriers=this._parcelCarriers(q),codes=[...text.toUpperCase().matchAll(/\b(?=[A-Z0-9]*\d)[A-Z0-9]{8,35}\b/g)].map(m=>m[0]);
     if(remove&&add)return {error:'Skriv én handling ad gangen: tilføj eller fjern en pakkesporing.'};
     let carrier=carriers.length===1?carriers[0]:null,code=codes[0];
+    if(['Bring','DAO'].includes(carrier))return this._parcelTarget(carrier,remove?'untrack_parcel':'track_parcel');
     if(remove&&carriers.length<=1&&codes.length<=1){
       const candidates=this._model(this._hass?.states||{}).parcels.filter(p=>p.barcode&&(!carrier||p.carrier===carrier)&&(!code||p.barcode.toUpperCase()===code));
       if(candidates.length===1){carrier=candidates[0].carrier;code=candidates[0].barcode;}
       else if(!code)return {error:'Tryk på “Se pakker” og derefter “Fjern sporing” ved den rigtige pakke. Du kan også skrive transportør og pakkenummer.'};
     }
-    if(!carrier)return {error:({da:'Skriv én transportør sammen med pakkenummeret: GLS, PostNord, DHL eller Bring.',en:'Enter one carrier and tracking number: GLS, PostNord, DHL or Bring.',de:'Gib einen Paketdienst und eine Sendungsnummer an: GLS, PostNord, DHL oder Bring.'})[this._language()]};
+    if(!carrier){
+      const names=[...new Set((this._config.sources||[]).map(s=>s.carrier))].join(', ');
+      return {error:({da:names?'Hvilken transportør gælder pakken? Du har valgt: '+names+'.':'Vælg først pakkesensorer i robotindstillingerne, så kan jeg hjælpe med dine pakker.',en:names?'Which carrier is the parcel with? You selected: '+names+'.':'First select parcel sensors in robot settings so I can help with your parcels.',de:names?'Bei welchem Paketdienst ist das Paket? Ausgewählt: '+names+'.':'Wähle zuerst Paketsensoren in den Robotereinstellungen, damit ich dir mit deinen Paketen helfen kann.'})[this._language()]};
+    }
     const action=remove?'untrack_parcel':'track_parcel',target=this._parcelTarget(carrier,action);if(target.error)return target;
-    if(!code||codes.length>1)return {error:'Skriv ét pakkenummer sammen med transportøren. Fx: Tilføj GLS-pakke 123456789.'};
+    if(!code)return {error:({da:(remove?'Hvilken pakke vil du fjerne sporingen af?':'Ja. Hvad er pakkenummeret hos '+carrier+'?')+' Skriv fx: '+(remove?'Fjern ':'Tilføj ')+carrier+'-pakke 123456789.',en:(remove?'Which parcel should I stop tracking?':'Yes. What is the '+carrier+' tracking number?')+' For example: '+(remove?'Remove ':'Add ')+carrier+' parcel 123456789.',de:(remove?'Für welches Paket soll ich die Sendungsverfolgung entfernen?':'Ja. Wie lautet die '+carrier+'-Sendungsnummer?')+' Zum Beispiel: '+carrier+'-Paket 123456789 '+(remove?'entfernen.':'hinzufügen.')})[this._language()]};
+    if(codes.length>1)return {error:({da:'Skriv ét pakkenummer ad gangen for '+carrier+'.',en:'Enter one '+carrier+' tracking number at a time.',de:'Gib jeweils eine '+carrier+'-Sendungsnummer ein.'})[this._language()]};
     return {...target,carrier,code,action};
   }
   async _handleParcelCommand(command,readAloud=false) {
@@ -501,7 +507,7 @@ class DashboardRobot extends HTMLElement {
         const key=source.carrier+':'+(barcode||JSON.stringify([p.sender,p.status,p.delivered_at]));
         if(seen.has(key))continue; seen.add(key);
         const kind=p.delivered||p.status==='delivered'?'delivered':p.status==='at_pickup_point'?'pickup':source.kind;
-        parcels.push({carrier:source.carrier,barcode,sender:String(p.sender||p.description||'Pakke'),kind,date:p.delivered_at||p.expected_delivery,can_untrack:source.carrier!=='Bring'&&source.can_untrack!==false});
+        parcels.push({carrier:source.carrier,barcode,sender:String(p.sender||p.description||'Pakke'),kind,date:p.delivered_at||p.expected_delivery,can_untrack:!['Bring','DAO'].includes(source.carrier)&&source.can_untrack!==false});
       }
     }
     const priority={pickup:0,incoming:1,delivered:2};parcels.sort((a,b)=>priority[a.kind]-priority[b.kind]||(String(b.date||'').localeCompare(String(a.date||'')))) ;
@@ -583,7 +589,7 @@ window.customCards=window.customCards||[];window.customCards.push({type:'dashboa
       const sources=config.parcel_sources?[...config.parcel_sources]:[];
       for(const [entity,state] of Object.entries(hass.states)){
         if(config.parcel_sources||!(config.package_entities||[]).includes(entity))continue;
-        const carrier=/postnord/i.test(entity)?'PostNord':/gls/i.test(entity)?'GLS':/dhl/i.test(entity)?'DHL':/posten_bring/i.test(entity)?'Bring':null;
+        const carrier=/postnord/i.test(entity)?'PostNord':/gls/i.test(entity)?'GLS':/dhl/i.test(entity)?'DHL':/posten_bring/i.test(entity)?'Bring':/\bdao[_ .]/i.test(entity)?'DAO':null;
         const kind=/klar_til_afhentning|awaiting_pickup/.test(entity)?'pickup':/indkommende_pakker|incoming_parcels/.test(entity)?'incoming':/leverede_pakker|delivered_parcels/.test(entity)?'delivered':null;
         if(carrier&&kind&&!/outgoing|udgaende/.test(entity))sources.push({entity,carrier,kind});
       }

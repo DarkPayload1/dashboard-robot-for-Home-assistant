@@ -62,7 +62,7 @@ def _entry_config(hass,entry):
         if entity_id in selected_packages:
             source_entry=hass.config_entries.async_get_entry(entity.config_entry_id)
             domain=source_entry.domain if source_entry else None
-            carrier={'gls':'GLS','postnord':'PostNord','dhl':'DHL','posten_bring':'Bring'}.get(domain)
+            carrier={'gls':'GLS','postnord':'PostNord','dhl':'DHL','posten_bring':'Bring','dao':'DAO'}.get(domain)
             role=getattr(entity,'translation_key',None) or ''
             text=(role+' '+entity_id).casefold()
             kind='pickup' if any(v in text for v in ['awaiting_pickup','klar_til_afhentning']) else 'delivered' if any(v in text for v in ['delivered_parcels','leverede_pakker']) else 'incoming' if any(v in text for v in ['incoming_parcels','indkommende_pakker']) else None

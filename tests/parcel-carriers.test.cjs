@@ -7,7 +7,7 @@ for(const [lang,dhl,bring,add] of [['da','Har jeg DHL pakker?','Har jeg Bring pa
  r._config.language=lang;assert.match(r._answerQuestion(dhl),/DHL sender/);assert.ok(!r._answerQuestion(dhl).includes('Bring sender'));assert.match(r._answerQuestion(bring),/Bring sender/);assert.ok(!r._answerQuestion(bring).includes('DHL sender'));
  const command=r._parseParcelCommand(add);assert.equal(command.domain,'dhl');await r._handleParcelCommand(command);assert.deepStrictEqual(calls.pop(),['dhl','track_parcel',{tracking_code:'00123456789',config_entry_id:'dhl-selected'}]);
 }
-r._config.language='da';assert.match(r._parseParcelCommand('Tilføj Bring pakke BR123456789').error,/Manuel/);assert.equal(calls.length,0);
+r._config.language='da';assert.match(r._parseParcelCommand('Tilføj Bring pakke BR123456789').error,/manuelt/);assert.equal(calls.length,0);
 await r._handleParcelCommand(r._parseParcelCommand('Fjern DHL pakke 00123456789'));assert.equal(calls.length,0);await r._confirmParcel();assert.equal(calls.pop()[1],'untrack_parcel');await r._confirmParcel();assert.equal(calls.length,0);
 r._hass.states['sensor.renamed_bring'].state='unavailable';assert.match(r._answerQuestion('Bring pakker'),/utilgængelige|ikke se/);assert.ok(!r._answerQuestion('Bring pakker').includes('DHL sender'));
 r._config.sources=[sources[0]];assert.match(r._answerQuestion('Bring pakker'),/Vælg pakkesensorer/);
