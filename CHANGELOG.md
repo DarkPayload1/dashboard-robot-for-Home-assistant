@@ -1,3 +1,7 @@
+# 1.7.0-rc.10
+
+- Taleboblen over robotten viser en neutral invitation i stedet for automatisk pakkestatus. Pakkestatus vises ved spørgsmål eller åbning af pakkeoversigten.
+
 # 1.7.0-rc.9
 
 - Viser en enkel Se pakker-knap uden pakketæller i velkomsten.

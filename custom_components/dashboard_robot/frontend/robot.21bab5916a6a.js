@@ -67,7 +67,7 @@ class DashboardRobot extends HTMLElement {
     const m=this._model(this._hass.states),stage=this._stage;
     stage.classList.toggle('thinking',!!this._busy);stage.classList.toggle('answering',!!this._question&&!this._busy);stage.classList.toggle('music-moves',!!m.music&&!this._busy&&!this._listening);
     const mouth=stage.querySelector('.mouth');if(mouth)mouth.setAttribute('d',this._listening?'M82 86 Q90 89 98 86':this._busy?'M83 88 L97 88':'M79 86 Q90 96 101 86');
-    if(this._parcelBubble){const active=m.parcels.filter(p=>p.kind!=='delivered');this._parcelBubble.textContent=this._listening?'Jeg lytter …':this._busy?'Jeg tænker …':this._utterance?'Jeg svarer …':active.length?m.title:'Tryk på mig for at tale eller skrive';this._parcelBubble.hidden=!this._visible||!!this._dialog?.open;}
+    if(this._parcelBubble){this._parcelBubble.textContent=this._listening?'Jeg lytter …':this._busy?'Jeg tænker …':this._utterance?'Jeg svarer …':'Tryk på mig for at tale eller skrive';this._parcelBubble.hidden=!this._visible||!!this._dialog?.open;}
   }
   _loadFloating() {
     this._floating=true;
