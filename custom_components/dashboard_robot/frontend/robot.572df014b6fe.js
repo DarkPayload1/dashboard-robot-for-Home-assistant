@@ -128,7 +128,19 @@ class DashboardRobot extends HTMLElement {
 
 
   _voiceSettingsKey(){return 'dashboard-robot-voice:v1:'+ (this._config?.profile_id||'default')+':'+(this._hass?.user?.id||'browser')+':'+(this._config?.language||'da')+':'+(this._config?.speech_voice||'auto')+':'+(this._config?.speech_rate||'0.85');}
-  _voiceSettings(){let saved={};try{saved=JSON.parse(localStorage.getItem(this._voiceSettingsKey())||'{}')||{};}catch{}return {voice:saved.voice||this._config?.speech_voice||'auto',rate:Math.max(.7,Math.min(1.1,Number(saved.rate??this._config?.speech_rate??.85)||.85))};}
+  _voiceSettings(){let saved={};try{saved=JSON.parse(localStorage.getItem(this._voiceSettingsKey())||'{}')||{};}catch{}if(this._voiceMemory?.key===this._voiceSettingsKey())saved=this._voiceMemory.value;return {voice:saved.voice||this._config?.speech_voice||'auto',rate:Math.max(.5,Math.min(1.5,Number(saved.rate??this._config?.speech_rate??.85)||.85))};}
+
+  _saveVoiceSettings(value){
+    const key=this._voiceSettingsKey();this._voiceMemory={key,value};
+    try{localStorage.setItem(key,JSON.stringify(value));}catch{}
+    if(this._utterance){
+      const text=this._utterance.text||this._spokenAnswer||'';
+      window.speechSynthesis?.cancel();this._finishSpeech();
+      this._spokenAnswer=text;
+      if(this.isConnected&&this._visible)this._speak();
+    }
+  }
+
   _chooseVoice(synth,language){
     const lang=language||this._config?.language||'da',pref=this._voiceSettings().voice;
     const voices=synth.getVoices().filter(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang);
@@ -144,11 +156,11 @@ class DashboardRobot extends HTMLElement {
     if(!box){
       box=document.createElement('details');box.className='voice-settings';const summary=document.createElement('summary');summary.className='voice-settings-title';
       const select=document.createElement('select');select.className='voice-select';const rate=document.createElement('select');rate.className='voice-rate';
-      for(const value of [.7,.85,1,1.1]){const o=document.createElement('option');o.value=String(value);o.textContent=Math.round(value*100)+' %';rate.append(o);}
+      for(const value of [.5,.7,.85,1,1.1,1.3,1.5]){const o=document.createElement('option');o.value=String(value);o.textContent=Math.round(value*100)+' %';rate.append(o);}
       const test=document.createElement('button');test.type='button';test.className='voice-test';
-      const save=()=>{try{localStorage.setItem(this._voiceSettingsKey(),JSON.stringify({voice:select.value,rate:Number(rate.value)}));}catch{}};
+      const save=()=>this._saveVoiceSettings({voice:select.value,rate:Number(rate.value)});
       select.addEventListener('change',save);rate.addEventListener('change',save);
-      test.addEventListener('click',()=>{this._spokenAnswer=words[4]+this._robotName()+'.';this._speak();});
+      test.addEventListener('click',()=>{if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}this._spokenAnswer=words[4]+this._robotName()+'.';this._speak();});
       box.append(summary,select,rate,test);host.append(box);
     }
     box.querySelector('.voice-settings-title').textContent=words[0];

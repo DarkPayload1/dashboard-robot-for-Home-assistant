@@ -46,7 +46,7 @@ def schema(defaults, hass):
         options={'lovelace':'Home'}
     fields={
         vol.Required('speech_voice', default=defaults.get('speech_voice', 'auto')): SelectSelector(SelectSelectorConfig(options=[{'value':'auto','label':'Automatic'},{'value':'local','label':'On-device voice'},{'value':'online','label':'Online voice'}])),
-        vol.Required('speech_rate', default=str(defaults.get('speech_rate', '0.85'))): SelectSelector(SelectSelectorConfig(options=[{'value':'0.7','label':'70 %'},{'value':'0.85','label':'85 %'},{'value':'1','label':'100 %'},{'value':'1.1','label':'110 %'}])),
+        vol.Required('speech_rate', default=str(defaults.get('speech_rate', '0.85'))): SelectSelector(SelectSelectorConfig(options=[{'value':'0.5','label':'50 %'},{'value':'0.7','label':'70 %'},{'value':'0.85','label':'85 %'},{'value':'1','label':'100 %'},{'value':'1.1','label':'110 %'},{'value':'1.3','label':'130 %'},{'value':'1.5','label':'150 %'}])),
         vol.Required('robot_name', default=defaults.get('robot_name', 'Huself Kræz')): TextSelector(),
         vol.Optional('view_paths', default=defaults.get('view_paths','')): TextSelector(),
         vol.Required('language', default=defaults.get('language', 'da')): SelectSelector(SelectSelectorConfig(options=[{'value':'da','label':'Dansk'},{'value':'en','label':'English'},{'value':'de','label':'Deutsch'}])),

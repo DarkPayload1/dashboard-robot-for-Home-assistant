@@ -1,3 +1,17 @@
+# 1.7.5-rc.1
+
+## Dansk
+
+- Skift af stemme eller taletempo genstarter igangværende tale med det nye valg.
+- Prøv stemmen starter altid en ny prøve i stedet for kun at stoppe igangværende tale.
+- Tilføjer 50 %, 130 % og 150 % samt lokal hukommelse, hvis browserlagring er blokeret.
+
+## English
+
+- Changing voice or speech speed restarts active speech with the new setting.
+- Test voice always starts a fresh sample instead of merely stopping current speech.
+- Adds 50%, 130% and 150% speeds and in-memory settings when browser storage is blocked.
+
 # 1.7.4-rc.1
 
 ## Dansk
