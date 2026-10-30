@@ -1,3 +1,8 @@
+# 1.7.0-rc.8
+
+- Retter tilføjelse og fjernelse af PostNord- og GLS-pakkesporing: config_entry_id sendes kun, når den installerede handling understøtter feltet.
+- Bevarer kontovalg for DHL og beskyttelsen mod flere valgte konti.
+
 # 1.7.0-rc.7
 
 - Retter pakkesvar til at bruge den transportør, der spørges om, og bede tydeligt om manglende pakkenummer på dansk, engelsk og tysk.

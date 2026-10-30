@@ -355,7 +355,9 @@ class DashboardRobot extends HTMLElement {
     if(!supported)return {error:({da:'Den valgte '+carrier+'-integration har ikke den nødvendige handling til at ændre pakkesporing.',en:'The selected '+carrier+' integration does not offer the action needed to change parcel tracking.',de:'Die ausgewählte '+carrier+'-Integration bietet die benötigte Aktion zum Ändern der Sendungsverfolgung nicht an.'})[this._language()]};
     const entries=[...new Set(allowed.map(s=>s.config_entry_id).filter(Boolean))];
     if(entries.length>1)return {error:({da:'Vælg kun én '+carrier+'-konto i robotindstillingerne, før du ændrer sporing.',en:'Select only one '+carrier+' account in robot settings before changing tracking.',de:'Wähle nur ein '+carrier+'-Konto in den Robotereinstellungen, bevor du die Sendungsverfolgung änderst.'})[this._language()]};
-    return {domain,...(entries.length?{config_entry_id:entries[0]}:{})};
+    // Only send optional targeting fields advertised by this installed action.
+    const fields=this._hass?.services?.[domain]?.[action]?.fields||{};
+    return {domain,...(entries.length&&Object.prototype.hasOwnProperty.call(fields,'config_entry_id')?{config_entry_id:entries[0]}:{})};
   }
   _parseParcelCommand(text) {
     text=this._commandText(text);const q=text.toLocaleLowerCase('da-DK');
