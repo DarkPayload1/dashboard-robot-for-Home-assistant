@@ -2,7 +2,7 @@ name: Publish preview
 on:
   push:
     branches: [main]
-    paths: [custom_components/dashboard_robot/manifest.json]
+    paths: [custom_components/dashboard_robot/manifest.json, CHANGELOG.md, scripts/release_notes.py, .github/workflows/release.yml]
   workflow_dispatch:
 permissions:
   contents: write
@@ -18,11 +18,11 @@ jobs:
         run: |
           version=$(python -c 'import json; print(json.load(open("custom_components/dashboard_robot/manifest.json"))["version"])')
           tag="v${version}"
+          python scripts/release_notes.py "$version" > release-notes.md
           if gh release view "$tag" >/dev/null 2>&1; then
-            echo "Release already exists: $tag"
+            gh release edit "$tag" --notes-file release-notes.md
             exit 0
           fi
-          python scripts/release_notes.py "$version" > release-notes.md
           cd custom_components/dashboard_robot
           zip -r ../../dashboard_robot.zip . -x '*/__pycache__/*' '*.pyc'
           cd ../..
