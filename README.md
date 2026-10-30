@@ -4,6 +4,14 @@ A floating Home Assistant dashboard companion with text chat, optional voice inp
 
 **First public preview: v1.7.0-rc.2.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
 
+## Screenshots / Billeder
+
+Screenshots of Dashboard Robot and its setup will be added here.
+
+*Her kan du indsætte billeder af robotten og opsætningen.*
+
+<!-- To add images: edit this README on GitHub, place the cursor below this comment, then drag an image into the editor or paste it with Ctrl+V. GitHub inserts the image link automatically. Remove the placeholder sentences above when images have been added. Avoid screenshots showing API keys, addresses or other private information. -->
+
 ## Features
 
 - Danish, English and German interface.
