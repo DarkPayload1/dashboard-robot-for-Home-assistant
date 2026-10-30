@@ -1,3 +1,9 @@
+# 1.7.0-rc.9
+
+- Viser en enkel Se pakker-knap uden pakketæller i velkomsten.
+- Skjuler pakkefunktioner, når listen over valgte pakkekilder er tom, også ved gamle sensorvalg.
+- Indeholder rettelsen af PostNord- og GLS-handlingerne fra rc.8.
+
 # 1.7.0-rc.8
 
 - Retter tilføjelse og fjernelse af PostNord- og GLS-pakkesporing: config_entry_id sendes kun, når den installerede handling understøtter feltet.
