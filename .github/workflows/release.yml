@@ -22,7 +22,8 @@ jobs:
             echo "Release already exists: $tag"
             exit 0
           fi
+          python scripts/release_notes.py "$version" > release-notes.md
           cd custom_components/dashboard_robot
           zip -r ../../dashboard_robot.zip . -x '*/__pycache__/*' '*.pyc'
           cd ../..
-          gh release create "$tag" dashboard_robot.zip --target "$GITHUB_SHA" --prerelease --title "Dashboard Robot $tag" --notes "Dashboard Robot preview update. See CHANGELOG.md for changes and README.md for installation."
+          gh release create "$tag" dashboard_robot.zip --target "$GITHUB_SHA" --prerelease --title "Dashboard Robot $tag" --notes-file release-notes.md
