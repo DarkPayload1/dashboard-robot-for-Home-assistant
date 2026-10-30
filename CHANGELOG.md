@@ -1,3 +1,15 @@
+# 1.7.3-rc.1
+
+## Dansk
+
+- Tilføjer Robottens navn under Konfigurer → Robot. Navnet kan ændres uden at ændre opsætningsprofilens navn.
+- Viser navnet i chatoverskriften og bruger det i den talte velkomst. Standardnavn: Huself Kræz.
+
+## English
+
+- Adds Robot name under Configure → Robot. Change it independently of the setup profile name.
+- Uses the name in the chat heading and spoken greeting. Default name: Huself Kræz.
+
 # 1.7.2-rc.1
 
 ## Dansk

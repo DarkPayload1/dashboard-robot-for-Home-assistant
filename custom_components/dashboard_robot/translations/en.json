@@ -26,7 +26,8 @@
         "data": {
           "language": "Robot language",
           "dashboard_paths": "Dashboards (select multiple)",
-          "agent_id": "AI conversation agent"
+          "agent_id": "AI conversation agent",
+          "robot_name": "Robot name"
         }
       },
       "sources": {
@@ -92,7 +93,8 @@
         "data": {
           "language": "Robot language",
           "dashboard_paths": "Dashboards (select multiple)",
-          "agent_id": "AI conversation agent"
+          "agent_id": "AI conversation agent",
+          "robot_name": "Robot name"
         }
       },
       "sources": {

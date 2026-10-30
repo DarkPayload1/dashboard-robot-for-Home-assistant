@@ -26,7 +26,8 @@
         "data": {
           "language": "Sprache des Roboters",
           "dashboard_paths": "Dashboards (Mehrfachauswahl)",
-          "agent_id": "KI-Gesprächsassistent"
+          "agent_id": "KI-Gesprächsassistent",
+          "robot_name": "Name des Roboters"
         }
       },
       "sources": {
@@ -92,7 +93,8 @@
         "data": {
           "language": "Sprache des Roboters",
           "dashboard_paths": "Dashboards (Mehrfachauswahl)",
-          "agent_id": "KI-Gesprächsassistent"
+          "agent_id": "KI-Gesprächsassistent",
+          "robot_name": "Name des Roboters"
         }
       },
       "sources": {

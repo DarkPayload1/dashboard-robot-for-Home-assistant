@@ -45,6 +45,7 @@ def schema(defaults, hass):
     if not options:
         options={'lovelace':'Home'}
     fields={
+        vol.Required('robot_name', default=defaults.get('robot_name', 'Huself Kræz')): TextSelector(),
         vol.Optional('view_paths', default=defaults.get('view_paths','')): TextSelector(),
         vol.Required('language', default=defaults.get('language', 'da')): SelectSelector(SelectSelectorConfig(options=[{'value':'da','label':'Dansk'},{'value':'en','label':'English'},{'value':'de','label':'Deutsch'}])),
         vol.Required('dashboard_paths', default=selected): SelectSelector(SelectSelectorConfig(options=[{'value':key,'label':value} for key,value in options.items()],multiple=True,custom_value=True)),
@@ -161,7 +162,7 @@ def apply_sources(hass,draft,user_input):
 
 def basic_schema(defaults,hass):
     return vol.Schema({marker:value for marker,value in schema(defaults,hass).schema.items()
-                       if marker.schema in ['language','dashboard_paths','agent_id']})
+                       if marker.schema in ['robot_name','language','dashboard_paths','agent_id']})
 
 def integrations_schema(defaults,hass):
     options=integration_options(hass)

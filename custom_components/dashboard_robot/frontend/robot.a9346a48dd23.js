@@ -120,6 +120,14 @@ class DashboardRobot extends HTMLElement {
     if(this._helloDone||this._helloTimer)return;
     this._helloTimer=setTimeout(()=>{this._helloTimer=null;this._sayHello();},700);
   }
+
+  _robotName(){return String(this._config?.robot_name||'').trim().slice(0,60)||'Huself Kræz';}
+  _applyRobotName(){
+    const name=this._robotName(),title=this.shadowRoot?.querySelector('#robot-dialog-title');
+    if(title)title.textContent='🤖 '+name;
+    const eyebrow=this.shadowRoot?.querySelector('.eyebrow');if(eyebrow?.lastChild?.nodeType===3)eyebrow.lastChild.nodeValue=name;
+  }
+
   _sayHello(){
     if(this._helloDone||this._helloPending||!this.isConnected||!this._visible||this._busy||this._listening||this._question||document.visibilityState==='hidden')return;
     const synth=window.speechSynthesis;if(!synth||!window.SpeechSynthesisUtterance)return;
@@ -127,7 +135,7 @@ class DashboardRobot extends HTMLElement {
     const voice=synth.getVoices().find(v=>v.lang.toLowerCase().startsWith(locale.slice(0,2)));
     if(!voice){if(!this._helloVoicesHandler){this._helloVoicesHandler=()=>this._sayHello();synth.addEventListener?.('voiceschanged',this._helloVoicesHandler);}return;}
     if(this._utterance||synth.speaking)return;
-    const u=new window.SpeechSynthesisUtterance(({da:'Hej! Hvad kan jeg hjælpe dig med?',en:'Hello! How can I help you?',de:'Hallo! Wie kann ich dir helfen?'})[language]||'Hello! How can I help you?');
+    const name=this._robotName();const u=new window.SpeechSynthesisUtterance(({da:'Hej! Jeg er '+name+'. Hvad kan jeg hjælpe dig med?',en:'Hello! I am '+name+'. How can I help you?',de:'Hallo! Ich bin '+name+'. Wie kann ich dir helfen?'})[language]||'Hello! I am '+name+'. How can I help you?');
     u.lang=locale;u.voice=voice;u.rate=1;this._helloPending=true;this._utterance=u;
     u.onstart=()=>{this._helloDone=true;this._helloPending=false;this._stage?.classList.add('speaking');this._refreshExpression();this._clearHelloListeners();};
     u.onend=()=>{this._helloPending=false;if(this._utterance===u)this._finishSpeech();};
@@ -444,7 +452,7 @@ class DashboardRobot extends HTMLElement {
     if(changed)log.scrollTop=log.scrollHeight;
   }
 
-  _update(){this._renderOriginal();this._renderChatHistory();this._localize();this._applyCapabilities();}
+  _update(){this._renderOriginal();this._renderChatHistory();this._localize();this._applyCapabilities();this._applyRobotName();}
   _commandText(text){
     let q=String(text||'').trim();if(this._language()==='da')return q;
     const replacements=[[/^(?:can|could|would) you\s+/i,''],[/^kannst du\s+/i,''],[/^turn on (?:the )?lights?/i,'tænd lys'],[/^turn off (?:the )?lights?/i,'sluk lys'],[/^dim (?:the )?lights? to (\d+)\s*(?:percent|%)/i,'dæmp lyset til $1 procent'],[/^(?:play|resume) (?:the )?music/i,'spil musik'],[/^pause (?:the )?music/i,'pause musik'],[/^turn (?:the )?volume (up|down)/i,(_,d)=>d.toLowerCase()==='up'?'skru op':'skru ned'],[/^(?:show|open) (?:me )?(?:the )?camera/i,'åbn kamera'],[/^(add|remove)\s+(GLS|PostNord|DHL|Bring|DAO)[- ]+(?:parcel|tracking)\s+/i,(_,a,c)=>(a.toLowerCase()==='add'?'tilføj':'fjern')+' '+c+' pakke '],[/\s+in (?:the )?/i,' i '],[/^(?:zeige|zeig|öffne) (?:mir )?(?:die )?kamera/i,'åbn kamera'],[/^licht (?:im|in) (.+) einschalten$/i,'tænd lys i $1'],[/^licht (?:im|in) (.+) ausschalten$/i,'sluk lys i $1'],[/^musik (?:im|in) (.+) (?:abspielen|fortsetzen)$/i,'spil musik i $1'],[/^musik (?:im|in) (.+) pausieren$/i,'pause musik i $1'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) hinzufügen$/i,'tilføj $1 pakke $2'],[/^(GLS|PostNord|DHL|Bring|DAO)[- ]paket (\w+) entfernen$/i,'fjern $1 pakke $2']];
