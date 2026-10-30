@@ -1,3 +1,7 @@
+# 1.7.0-rc.4
+
+- Retter automatisk oplæsning af brændstofpriser og andre lokale svar ved stemmespørgsmål. Skrevne spørgsmål starter ikke oplæsning.
+
 # 1.7.0-rc.3
 
 - Retter sammenblanding af benzin- og dieselpriser. Alle brændstofsensorer fra valgte integrationer medtages, og svaret angiver sensorens navn.

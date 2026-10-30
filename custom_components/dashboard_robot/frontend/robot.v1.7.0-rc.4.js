@@ -225,7 +225,7 @@ class DashboardRobot extends HTMLElement {
     const command=this._parseParcelCommand(text);
     if(command){await this._handleParcelCommand(command,readAloud);return;}
     const agent=this._config.agent_id;
-    if(!agent||this._isFuelQuestion(text)){this._aiAnswer=this._answerQuestion(text);this._busy=false;this._update();return;}
+    if(!agent||this._isFuelQuestion(text)){this._aiAnswer=this._answerQuestion(text);this._voiceReply=readAloud;this._busy=false;this._update();if(readAloud&&this._visible&&this.isConnected&&this._dialog?.open)this._speak();return;}
     let timeout;
     try{
       const facts=this._currentFacts();
