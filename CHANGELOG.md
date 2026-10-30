@@ -1,3 +1,19 @@
+# 1.7.0-rc.15
+
+## Dansk
+
+- Seks danse med tilfældige skift under musik: hop, svaj, twist, sidetrin, nik og vink.
+- Automatisk velkomst på valgt dansk, engelsk eller tysk, når robotten tilsluttes dashboardet.
+- Hvis browseren blokerer automatisk tale, forsøges igen efter brugerens næste interaktion. En passende talestemme skal være installeret.
+- Velkomsten afbryder ikke en aktiv samtale, og dans respekterer reduceret bevægelse.
+
+## English
+
+- Six dances with randomized changes during music: bounce, sway, twist, step, nod and wave.
+- Automatic greeting in the selected Danish, English or German language when the robot joins the dashboard.
+- If the browser blocks automatic speech, the greeting is retried after the next user interaction. A matching system voice is required.
+- The greeting does not interrupt an active conversation, and dancing respects reduced motion.
+
 # 1.7.0-rc.14
 
 ## Dansk
