@@ -1,3 +1,17 @@
+# 1.7.0-rc.13
+
+## Dansk
+
+- Robotten vinker ved åbning af dashboardet og bevæger munden under oplæsning.
+- Bevarer den nye hvide robotfigur og lysglød ved tale og lytning.
+- Respekterer enhedens indstilling for reduceret bevægelse.
+
+## English
+
+- The robot waves when the dashboard opens and moves its mouth during speech playback.
+- Keeps the new white robot artwork and the glow while speaking and listening.
+- Respects the device's reduced-motion preference.
+
 # 1.7.0-rc.12
 
 ## Dansk
