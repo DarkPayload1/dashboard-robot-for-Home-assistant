@@ -3,8 +3,11 @@ from pathlib import Path
 import voluptuous as vol
 from homeassistant.components import frontend, websocket_api
 from homeassistant.components.http import StaticPathConfig
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import area_registry as ar, device_registry as dr, entity_registry as er
 from .const import DOMAIN, VERSION, FRONTEND_SCRIPT
+
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 async def async_setup(hass, config):
     if DOMAIN in hass.data:

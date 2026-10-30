@@ -7,5 +7,6 @@ root=Path(__file__).resolve().parents[1]
 p=root/'custom_components/dashboard_robot/manifest.json'
 data=json.loads(p.read_text());url='https://github.com/'+sys.argv[1]
 data.update(documentation=url+'#readme',issue_tracker=url+'/issues',codeowners=['@'+sys.argv[1].split('/')[0]])
+data={key:data[key] for key in ['domain','name',*sorted(set(data)-{'domain','name'})]}
 p.write_text(json.dumps(data,indent=2)+'\n')
 print('Manifest links prepared. No repository was created or published.')
