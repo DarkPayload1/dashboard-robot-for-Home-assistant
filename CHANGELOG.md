@@ -1,3 +1,7 @@
+# 1.7.0-rc.11
+
+- Fjerner Se pakker-knappen helt fra robotvinduets handlingslinje. Pakkeoversigten kan fortsat åbnes via spørgsmål og Pakker-genvejen.
+
 # 1.7.0-rc.10
 
 - Taleboblen over robotten viser en neutral invitation i stedet for automatisk pakkestatus. Pakkestatus vises ved spørgsmål eller åbning af pakkeoversigten.

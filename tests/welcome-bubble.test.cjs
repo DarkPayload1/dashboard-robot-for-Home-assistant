@@ -4,3 +4,5 @@ const r=Object.create(C.prototype);Object.assign(r,{_stage:{classList:{toggle(){
 r._refreshExpression();assert.equal(r._parcelBubble.textContent,'Tryk på mig for at tale eller skrive');r._listening=true;r._refreshExpression();assert.equal(r._parcelBubble.textContent,'Jeg lytter …');
 assert.ok(!fs.readFileSync('custom_components/dashboard_robot/frontend/robot.js','utf8').includes("`Se pakker${"));
 console.log('Passed: eight parcels never replace the neutral welcome; listening feedback remains.');
+
+assert.ok(!fs.readFileSync('custom_components/dashboard_robot/frontend/robot.js','utf8').includes('class="packages"'));
