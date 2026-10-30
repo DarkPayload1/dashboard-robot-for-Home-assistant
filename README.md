@@ -1,8 +1,3 @@
-<img width="563" height="271" alt="Skærmbillede 2026-10-30 123616" src="https://github.com/user-attachments/assets/f43707a1-f0fc-4dbb-8362-2ed3e7432f8e" />
-<img width="563" height="271" alt="Skærmbillede 2026-10-30 123616" src="https://github.com/user-attachments/assets/5698d400-ed66-42b5-8ce8-2c674822fc06" />
-<img width="563" height="271" alt="Skærmbillede 2026-10-30 123616" src="https://github.com/user-attachments/assets/7e2df49e-e3c6-46e5-983b-01eac4abcb17" />
-<img width="563" height="271" alt="Skærmbillede 2026-10-30 123616" src="https://github.com/user-attachments/assets/488124a8-be98-463f-b159-92b312eb06d4" />
-<img width="563" height="271" alt="Skærmbillede 2026-10-30 123616" src="https://github.com/user-attachments/assets/ff593635-4ab9-4749-9e15-336ed4415dfa" />
 # Dashboard Robot
 
 A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
