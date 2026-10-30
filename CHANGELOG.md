@@ -1,3 +1,7 @@
+# 1.7.0-rc.5
+
+- Robotten starter med en generel velkomst, også når pakkesporing er valgt. Pakkestatus vises ved spørgsmål om pakker eller åbning af pakkeoversigten.
+
 # 1.7.0-rc.4
 
 - Retter automatisk oplæsning af brændstofpriser og andre lokale svar ved stemmespørgsmål. Skrevne spørgsmål starter ikke oplæsning.
