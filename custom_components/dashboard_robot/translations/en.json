@@ -27,7 +27,9 @@
           "language": "Robot language",
           "dashboard_paths": "Dashboards (select multiple)",
           "agent_id": "AI conversation agent",
-          "robot_name": "Robot name"
+          "robot_name": "Robot name",
+          "speech_voice": "Preferred voice type",
+          "speech_rate": "Speech speed"
         }
       },
       "sources": {
@@ -94,7 +96,9 @@
           "language": "Robot language",
           "dashboard_paths": "Dashboards (select multiple)",
           "agent_id": "AI conversation agent",
-          "robot_name": "Robot name"
+          "robot_name": "Robot name",
+          "speech_voice": "Preferred voice type",
+          "speech_rate": "Speech speed"
         }
       },
       "sources": {

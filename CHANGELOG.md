@@ -1,3 +1,17 @@
+# 1.7.4-rc.1
+
+## Dansk
+
+- Tilføjer Stemme og taletempo i chatvinduet med enhedens tilgængelige stemmer og en prøveknap. Valg gemmes lokalt pr. profil og sprog.
+- Tilføjer foretrukken stemmetype og taletempo under robotindstillingerne. Standardtempo er 85 % for roligere oplæsning.
+- Velkomst og svar bruger samme stemmevalg. En passende stemme skal være installeret på enheden.
+
+## English
+
+- Adds Voice and speed in the chat window with available device voices and a test button. Choices are saved locally per profile and language.
+- Adds preferred voice type and speech speed to robot settings. Default speed is 85% for slower playback.
+- Greetings and answers use the same voice settings. A matching voice must be installed on the device.
+
 # 1.7.3-rc.1
 
 ## Dansk

@@ -27,7 +27,9 @@
           "language": "Robottens sprog",
           "dashboard_paths": "Dashboards (vælg flere)",
           "agent_id": "AI-assistent (valgfri)",
-          "robot_name": "Robottens navn"
+          "robot_name": "Robottens navn",
+          "speech_voice": "Foretrukken stemmetype",
+          "speech_rate": "Taletempo"
         }
       },
       "sources": {
@@ -94,7 +96,9 @@
           "language": "Robottens sprog",
           "dashboard_paths": "Dashboards (vælg flere)",
           "agent_id": "AI-assistent (valgfri)",
-          "robot_name": "Robottens navn"
+          "robot_name": "Robottens navn",
+          "speech_voice": "Foretrukken stemmetype",
+          "speech_rate": "Taletempo"
         }
       },
       "sources": {

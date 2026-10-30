@@ -27,7 +27,9 @@
           "language": "Sprache des Roboters",
           "dashboard_paths": "Dashboards (Mehrfachauswahl)",
           "agent_id": "KI-Gesprächsassistent",
-          "robot_name": "Name des Roboters"
+          "robot_name": "Name des Roboters",
+          "speech_voice": "Bevorzugter Stimmtyp",
+          "speech_rate": "Sprechtempo"
         }
       },
       "sources": {
@@ -94,7 +96,9 @@
           "language": "Sprache des Roboters",
           "dashboard_paths": "Dashboards (Mehrfachauswahl)",
           "agent_id": "KI-Gesprächsassistent",
-          "robot_name": "Name des Roboters"
+          "robot_name": "Name des Roboters",
+          "speech_voice": "Bevorzugter Stimmtyp",
+          "speech_rate": "Sprechtempo"
         }
       },
       "sources": {
