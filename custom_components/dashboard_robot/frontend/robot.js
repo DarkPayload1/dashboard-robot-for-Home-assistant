@@ -734,14 +734,35 @@ class DashboardRobot extends HTMLElement {
     if(/musik|music/.test(q))return facts.music||choose('Ingen musik registreret.','No music detected.','Keine Musik erkannt.');
     return choose('Vælg en AI-assistent under Dashboard Robot → Konfigurer for fri samtale.','Select an AI agent in Dashboard Robot → Configure for free conversation.','Wähle einen KI-Assistenten unter Dashboard Robot → Konfigurieren für freie Gespräche.');
   }
+
+  _speechText(text){
+    const lang=this._config?.language||'da';
+    const da=n=>{
+      const small=['nul','en','to','tre','fire','fem','seks','syv','otte','ni','ti','elleve','tolv','tretten','fjorten','femten','seksten','sytten','atten','nitten'];
+      if(n<20)return small[n];if(n<100){const tens=['','','tyve','tredive','fyrre','halvtreds','tres','halvfjerds','firs','halvfems'];return (n%10?small[n%10]+'og':'')+tens[Math.floor(n/10)];}
+      if(n<1000)return (n<200?'et':da(Math.floor(n/100)))+' hundrede'+(n%100?' og '+da(n%100):'');
+      if(n<1000000)return (n<2000?'et':da(Math.floor(n/1000)))+' tusind'+(n%1000?' '+(n%1000<100?'og ':'')+da(n%1000):'');return String(n);
+    };
+    return String(text||'').replace(/(?<![\p{L}\p{N}.,])(-?\d+(?:[.,]\d{1,4})?)\s*(?:DKK\b|kr\.?\b|kroner\b|krone\b)(?:\.)?(?:\s*(?:\/|per\s+|pr\.?\s+)\s*(kWh|liter|l)\b)?/giu,(_,raw,unit)=>{
+      const value=Number(raw.replace(',','.'));if(!Number.isFinite(value))return _;
+      const cents=Math.round((Math.abs(value)+Number.EPSILON)*100),whole=Math.floor(cents/100),fraction=cents%100;
+      let amount;
+      if(lang==='da')amount=(value<0?'minus ':'')+(whole===1?'en krone':da(whole)+' kroner')+(fraction?' og '+(fraction===1?'en øre':da(fraction)+' øre'):'');
+      else if(lang==='de')amount=(value<0?'minus ':'')+whole+' dänische '+(whole===1?'Krone':'Kronen')+(fraction?' und '+fraction+' Öre':'');
+      else amount=(value<0?'minus ':'')+whole+' Danish '+(whole===1?'krone':'kroner')+(fraction?' and '+fraction+' øre':'');
+      if(unit)amount+=' '+({da:'pr. ',en:'per ',de:'pro '}[lang]||'per ')+(unit.toLowerCase()==='kwh'?{da:'kilowatt-time',en:'kilowatt hour',de:'Kilowattstunde'}[lang]:{da:'liter',en:'litre',de:'Liter'}[lang]);
+      return amount;
+    });
+  }
+
   _speak() {
-    if(this._localSpeechEntity())return this._speakLocal(this._translate(this._spokenAnswer||''));
+    if(this._localSpeechEntity())return this._speakLocal(this._speechText(this._translate(this._spokenAnswer||'')));
     const note=this.shadowRoot.querySelector('.voice-note'),synth=window.speechSynthesis;
     if(this._utterance){synth?.cancel();this._finishSpeech();return;}
     if(!synth||typeof window.SpeechSynthesisUtterance!=='function'){note.textContent='Din browser understøtter ikke oplæsning.';return;}
     const voice=this._chooseVoice(synth,this._language());
     if(!voice){note.textContent='Ingen dansk stemme fundet. Tilføj en dansk talestemme på enheden, og genåbn dashboardet.';return;}
-    const utterance=new window.SpeechSynthesisUtterance(this._translate(this._spokenAnswer||''));utterance.lang=this._locale();utterance.voice=voice;utterance.rate=this._voiceSettings().rate;this._utterance=utterance;
+    const utterance=new window.SpeechSynthesisUtterance(this._speechText(this._translate(this._spokenAnswer||'')));utterance.lang=this._locale();utterance.voice=voice;utterance.rate=this._voiceSettings().rate;this._utterance=utterance;
     utterance.onend=()=>{if(this._utterance===utterance)this._finishSpeech();};
     utterance.onerror=e=>{if(this._utterance===utterance){this._finishSpeech();if(!['canceled','interrupted'].includes(e.error))note.textContent='Oplæsningen kunne ikke starte. Prøv igen.';}};
     note.textContent='';this.shadowRoot.querySelector('.speak').textContent='■ Stop oplæsning';this.shadowRoot.querySelector('.stage').classList.add('speaking');this._refreshExpression();this._renderExperience();

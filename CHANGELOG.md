@@ -1,3 +1,17 @@
+# 1.7.10-rc.1
+
+## Dansk
+
+- Oplæser priser som kroner og øre i stedet for tvetydige decimaltal: 2,29 DKK/kWh bliver til “to kroner og niogtyve øre pr. kilowatt-time”.
+- Gælder både Piper og browserstemmer. Understøtter punktum/komma, negative priser og brændstofpriser pr. liter; teksten i chatten ændres ikke.
+- Har sprogtilpassede valutaenheder på dansk, engelsk og tysk. Pakkenumre og temperaturer bevares.
+
+## English
+
+- Reads prices as whole kroner and øre rather than ambiguous decimal digits, including expanded per-kilowatt-hour and per-litre units.
+- Applies to Piper and browser speech. Supports decimal dots/commas, negative prices and fuel prices; visible chat text is unchanged.
+- Uses language-specific currency wording for Danish, English and German while preserving tracking numbers and temperatures.
+
 # 1.7.9-rc.1
 
 ## Dansk
