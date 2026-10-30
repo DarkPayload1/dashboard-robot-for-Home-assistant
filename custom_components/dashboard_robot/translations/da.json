@@ -1,0 +1,132 @@
+{
+  "title": "Dashboard Robot",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vælg rum",
+        "description": "Trin 1: Vælg rum. Rummenes lys, højttalere og kameraer findes automatisk.",
+        "data": {
+          "name": "Navn på robotopsætning",
+          "area_ids": "Rum"
+        }
+      },
+      "devices": {
+        "title": "Manuelle enheder",
+        "description": "Tilpas kun enhederne og eventuel begrænsning til faner. Sprog, AI og sensorer gentages ikke her.",
+        "data": {
+          "light_entities": "Lys robotten må styre",
+          "media_entities": "Højttalere robotten må styre",
+          "camera_entities": "Kameraer robotten må åbne",
+          "view_paths": "Rumsider/faner (valgfrit, stier adskilt med komma)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Vælg sprog, dashboards og AI-assistent. Hvert valg vises kun her.",
+        "data": {
+          "language": "Robottens sprog",
+          "dashboard_paths": "Dashboards (vælg flere)",
+          "agent_id": "AI-assistent (valgfri)"
+        }
+      },
+      "sources": {
+        "title": "Oplysninger fra dine integrationer",
+        "description": "Kontrollér funktionernes sensorer én gang. Ingen lang liste med ekstra sensorer vises her. Tomme felter er valgfrie.",
+        "data": {
+          "electricity_price_entity": "Strømpris",
+          "power_entity": "Strømforbrug",
+          "waste_entity": "Affaldsafhentning",
+          "fuel_entity": "Brændstofpris",
+          "weather_entity": "Vejr",
+          "package_entities": "Pakkesensorer"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrationer",
+        "description": "Vælg dine integrationer. Næste side viser kun funktionerne. Manuelle enheder og ekstra sensorlister åbnes kun, hvis du vælger dem nedenfor.",
+        "data": {
+          "integration_ids": "Installerede integrationer (valgfrit)",
+          "advanced": "Tilpas lys, højttalere og kameraer",
+          "extra_readings": "Tilpas ekstra sensorer (valgfrit)"
+        }
+      },
+      "readings": {
+        "title": "Ekstra sensorer",
+        "description": "Valgfrit: vælg ekstra oplysninger, robotten må læse. Eksisterende valg bevares, hvis du springer denne side over.",
+        "data": {
+          "read_entities": "Andre oplysninger robotten må læse"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Skriv dashboardstier uden adresse eller undersider, adskilt med komma.",
+      "choose_rooms": "Vælg mindst ét rum."
+    },
+    "abort": {
+      "single_instance_allowed": "Robotten er allerede tilføjet. Brug Konfigurer til at ændre den."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vælg rum",
+        "description": "Trin 1: Vælg rum. Rummenes lys, højttalere og kameraer findes automatisk.",
+        "data": {
+          "name": "Navn på robotopsætning",
+          "area_ids": "Rum"
+        }
+      },
+      "devices": {
+        "title": "Manuelle enheder",
+        "description": "Tilpas kun enhederne og eventuel begrænsning til faner. Sprog, AI og sensorer gentages ikke her.",
+        "data": {
+          "light_entities": "Lys robotten må styre",
+          "media_entities": "Højttalere robotten må styre",
+          "camera_entities": "Kameraer robotten må åbne",
+          "view_paths": "Rumsider/faner (valgfrit, stier adskilt med komma)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Vælg sprog, dashboards og AI-assistent. Hvert valg vises kun her.",
+        "data": {
+          "language": "Robottens sprog",
+          "dashboard_paths": "Dashboards (vælg flere)",
+          "agent_id": "AI-assistent (valgfri)"
+        }
+      },
+      "sources": {
+        "title": "Oplysninger fra dine integrationer",
+        "description": "Kontrollér funktionernes sensorer én gang. Ingen lang liste med ekstra sensorer vises her. Tomme felter er valgfrie.",
+        "data": {
+          "electricity_price_entity": "Strømpris",
+          "power_entity": "Strømforbrug",
+          "waste_entity": "Affaldsafhentning",
+          "fuel_entity": "Brændstofpris",
+          "weather_entity": "Vejr",
+          "package_entities": "Pakkesensorer"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrationer",
+        "description": "Vælg dine integrationer. Næste side viser kun funktionerne. Manuelle enheder og ekstra sensorlister åbnes kun, hvis du vælger dem nedenfor.",
+        "data": {
+          "integration_ids": "Installerede integrationer (valgfrit)",
+          "advanced": "Tilpas lys, højttalere og kameraer",
+          "extra_readings": "Tilpas ekstra sensorer (valgfrit)"
+        }
+      },
+      "readings": {
+        "title": "Ekstra sensorer",
+        "description": "Valgfrit: vælg ekstra oplysninger, robotten må læse. Eksisterende valg bevares, hvis du springer denne side over.",
+        "data": {
+          "read_entities": "Andre oplysninger robotten må læse"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Kontroller dashboardstierne.",
+      "choose_rooms": "Vælg mindst ét rum."
+    }
+  }
+}

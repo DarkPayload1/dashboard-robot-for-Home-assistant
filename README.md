@@ -1,2 +1,87 @@
-# dashboard-robot-for-Home-assistant
-Integrate a robot into your Home Assistant dashboards
+# Dashboard Robot
+
+A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
+
+**First public preview: v1.7.0-rc.1.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
+
+## Features
+
+- Danish, English and German interface.
+- Multiple dashboard profiles and optional view restrictions.
+- Room selection finds lights, speakers and all room cameras.
+- Optional manual device choices, including speakers and cameras without an area.
+- Camera chooser and room/name questions.
+- Choose installed integrations and review sensor suggestions for electricity, power, fuel, waste, weather and compatible parcels.
+- Optional extra sensor readings; optional existing Home Assistant conversation agent.
+- Drag the robot, hide/show it, and use keyboard movement and reduced-motion preferences.
+
+Installed integrations are discovered through registered entities. Suggestions use domains, units, device classes and names; unknown integrations are not automatically understood or controlled. Device commands support selected lights and media players. Camera viewing opens Home Assistant's entity dialog. No heating or lock control is implemented.
+
+## Requirements
+
+Home Assistant 2026.10 or newer and a modern browser. Voice input requires HTTPS, microphone permission and browser speech-recognition support. Reading aloud requires a suitable voice installed on the device. AI requires your own configured conversation integration. Text and supported local commands can be used without AI.
+
+## Install with HACS
+
+This is a **custom repository**, not an entry in the HACS default catalogue.
+
+1. Open HACS and its custom repositories menu.
+2. Add `https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant` with category **Integration**.
+3. Download Dashboard Robot. Enable prerelease versions if the preview is not offered.
+4. Restart Home Assistant.
+5. Open **Settings → Devices & services → Add integration → Dashboard Robot**.
+6. Follow setup and refresh your dashboard browser.
+
+The repository must be public for other users to download it through HACS.
+
+## Manual installation
+
+Download `dashboard_robot.zip` from [Releases](https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant/releases). Extract its contents into `config/custom_components/dashboard_robot/`, so that `manifest.json` is directly inside that folder. Restart Home Assistant, add the integration and refresh the dashboard.
+
+Alternatively, copy `custom_components/dashboard_robot` from this repository into your configuration's `custom_components` folder.
+
+## Setup
+
+1. **Rooms:** choose rooms; lights, media players and cameras are detected. Media players without areas are included too; remove unwanted ones through manual settings.
+2. **Robot:** choose language, dashboards and an optional AI assistant.
+3. **Integrations:** choose sources, then review function sensors once. Ambiguous suggestions need your choice.
+
+Manual devices and extra sensor readings each have an optional separate page. Existing extra readings are preserved when that page is skipped. A sensor's value and unit are used as provided; VAT and currency are not inferred.
+
+Leave **View paths** empty to show the robot on all views of selected dashboards. A restricted path must match the URL segment, not the visible title: a view titled “Overblik” might have the path `oversigt`. Matching view-specific profiles take priority over dashboard-wide ones; the first profile wins ties.
+
+On selected dashboards this robot temporarily hides older embedded parcel/wall robots, restoring their display when leaving. Their resources and settings are not deleted.
+
+## Examples
+
+- `Tænd lyset i stuen`
+- `Hvad koster strømmen nu?`
+- `Vis kamera i stue`
+- `Pause musik i stuen`
+- `Turn on lights in living room`
+- `Zeige mir die Kamera`
+
+Use your actual Home Assistant room/device names. Music resumes existing playback; it does not search for new music. Assign speakers an area for room commands; otherwise use their name.
+
+Compatible GLS/PostNord parcel sensors must expose a `parcels` attribute. Adding tracking uses their integration's supported service. Deleting tracking requires confirmation. Other parcel providers are not guaranteed to support tracking commands.
+
+## Privacy
+
+No credentials, personal addresses or user-specific entity IDs are bundled. Only configured sources are read. With an AI agent, selected readings and parcel/music information are sent as context to that agent; its provider's retention policy applies. Browser voice recognition may use the browser vendor's online service. No analytics are included.
+
+Device commands use the signed-in user's Home Assistant permissions. Selected entities define the robot's control scope, not an access-control boundary for other clients.
+
+## Updates and feedback
+
+Install updates through HACS or replace the same integration folder, then restart Home Assistant and refresh browsers. Existing configuration entries are retained. Preview releases may change; report reproducible problems through [Issues](https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant/issues), without credentials or private sensor data.
+
+## Development
+
+```sh
+python -m unittest discover -s tests
+node --test tests/*.test.cjs
+```
+
+GitHub Actions runs tests, hassfest and HACS validation. A separate release workflow creates a prerelease and `dashboard_robot.zip` when the manifest version changes on `main`. Publishing does not imply acceptance into HACS's default catalogue.
+
+MIT licensed. See [LICENSE](LICENSE).

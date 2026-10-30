@@ -1,0 +1,59 @@
+DASHBOARD ROBOT – UDGIVELSESKANDIDAT
+
+INSTALLATION
+Kopiér custom_components/dashboard_robot til /config/custom_components/.
+Genstart Home Assistant. Tilføj Dashboard Robot under Enheder og tjenester.
+Ved opdatering overskrives samme mappe; eksisterende opsætninger bevares.
+
+Vælg et eller flere dashboards. Lad Rumsider/faner være tomt for alle faner.
+Vælg Dansk, English eller Deutsch. Enheds- og rumnavne følger dine egne navne.
+Vælg de lys, højttalere, kameraer og sensorer, du ønsker at bruge.
+AI-assistent er valgfri. Du skal selv have opsat en samtaleintegration.
+Vælg pakkesensorer eksplicit; de skal understøtte parcels-oplysninger.
+
+Tale kræver HTTPS, mikrofontilladelse og browserunderstøttelse. Tekst virker
+uden mikrofon. Dansk/engelsk/tysk oplæsning kræver en passende browserstemme.
+Der følger ingen API-nøgler eller personlige sensorer med.
+
+Når du spørger AI, sendes værdier fra valgte sensorer samt pakkers afsender/
+status og musiktitel til din valgte samtaleassistent. Browserens talegenkendelse
+kan bruge en ekstern tjeneste. Læs README.md for funktioner og privatliv.
+
+Der er lokale automatiske tests. En ren Home Assistant-installation og fysisk
+vægskærm er endnu ikke testet. Pakken er ikke offentliggjort på GitHub eller HACS.
+GitHub-forberedelse: python scripts/prepare_repository.py EJER/REPOSITORY
+
+Licens: MIT. Andre må dele og ændre koden med licensmeddelelsen bevaret.
+
+
+Vælg først rum og derefter lys, højttalere og kameraer fra rummene. Enheder skal være tilknyttet et område i Home Assistant, direkte eller via deres enhed. Strømpris, vejr og andre fælles sensorer vælges særskilt. Når du skifter rum, fjernes valg af enheder uden for de valgte rum.
+
+
+Rumvalg tilføjer nu automatisk rummenes lys og højttalere. Næste side viser kun sprog, dashboards og valget Ekstra indstillinger. De ekstra indstillinger er valgfrie og bruges til at ændre enheder eller tilføje AI, kamera og fælles sensorer. Når rumvalget gemmes, får robotten lov til at styre rummenes lys og højttalere.
+
+
+Kamera vælges nu også automatisk fra de valgte rum. Et eksisterende kameravalg bevares, hvis det er i rummene. Ellers vælges det første kamera sorteret efter entitets-id. Ved flere kameraer kan du vælge et andet i Ekstra indstillinger. Efter opdateringen skal rumopsætningen gemmes igen, så kameraet tilføjes.
+
+
+Vælg de installerede integrationer på siden med sprog og dashboards. På næste side kontrollerer du de fundne oplysninger og forslag. Det virker på tværs af leverandører, når integrationerne har registrerede entiteter. Ved flere mulige sensorer vælger du selv. Andre sensorer kan vælges til aflæsning: spørg efter deres navn eller skriv Vis oplysninger. Med en AI-assistent indgår de valgte værdier også i samtalen. Robotten kan ikke udlede betydningen af alle ukendte integrationer; tekniske enhedsoplysninger bruges sammen med navne som forslag. Styring er fortsat begrænset til de understøttede lys, højttalere og kameraer. Ingen integrationer vælges automatisk.
+
+
+Aktuel strømpris genkendes nu frem for spotpris, afgifter og dagspriser. Et entydigt forslag gemmes automatisk, når du accepterer siden. Efter opdatering: Åbn opsætningen, gå videre med integrationerne, kontrollér Strømpris og gem sidste side.
+
+
+1.5.0-rc.3: Spørgsmål om strømpris giver nu kun den valgte aktuelle pris med to decimaler. Andre oplysninger med lignende navne overtager ikke længere svaret. Strømpris skal være valgt i opsætningen.
+
+
+Dashboard Robot har nu forrang på de valgte dashboards. Ældre indbyggede robotter skjules midlertidigt dér, så de ikke viser funktioner uden for dine valg. Når du forlader dashboardet, gendannes deres tidligere visning. Deres opsætning slettes ikke. Opdater integrationen, genstart Home Assistant og genindlæs siden.
+
+
+1.5.0-rc.5: AI-assistenten bevares, når du gennemgår eller ændrer strøm- og affaldsintegrationer. Hvis valget allerede er blevet slettet af den gamle version, skal Google vælges og gemmes én gang efter opdateringen.
+
+
+1.5.0-rc.6: Højttalere uden rum kommer automatisk med. Den manuelle liste viser alle registrerede medieafspillere, også Spotify. Du kan fjerne dem, du ikke vil bruge. Gem rumopsætningen igen efter opdateringen. For kommandoer efter rum skal højttaleren have det korrekte område i Home Assistant; uden rum bruger robotten højttalerens navn.
+
+
+1.6.0-rc.1: Alle kameraer i de valgte rum kommer nu med. I Ekstra indstillinger kan du vælge flere kameraer, også dem uden rum. Gem rumopsætningen igen efter opdateringen. Tryk Kamera for at få en liste, eller skriv fx Vis kamera i stue. Ved flere match vælger du selv. Utilgængelige kameraer vises, men kan ikke åbnes. Tidligere manuelt valgte kameraer bevares.
+
+
+1.7.0-rc.1: Opsætningen er samlet: 1) Rum, 2) Robot med sprog, dashboards og AI, 3) Integrationer med efterfølgende kontrol af sensorer. Hvert felt vises kun ét sted. Manuelle lys, højttalere og kameraer kan åbnes på en valgfri side. Den lange liste med ekstra sensorer åbnes kun via Tilpas ekstra sensorer. Når du springer siden over, bevares dine eksisterende valg. Google AI ændres kun på robotsiden. Installér som før: erstat custom_components/dashboard_robot, genstart Home Assistant og genindlæs siden.

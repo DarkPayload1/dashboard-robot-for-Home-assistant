@@ -1,0 +1,28 @@
+name: Publish preview
+on:
+  push:
+    branches: [main]
+    paths: [custom_components/dashboard_robot/manifest.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package integration and publish preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          version=$(python -c 'import json; print(json.load(open("custom_components/dashboard_robot/manifest.json"))["version"])')
+          tag="v${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release already exists: $tag"
+            exit 0
+          fi
+          cd custom_components/dashboard_robot
+          zip -r ../../dashboard_robot.zip . -x '*/__pycache__/*' '*.pyc'
+          cd ../..
+          gh release create "$tag" dashboard_robot.zip --target "$GITHUB_SHA" --prerelease --title "Dashboard Robot $tag" --notes "First preview of Dashboard Robot. See README for installation, setup, supported features and limitations. Report problems through Issues."

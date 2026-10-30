@@ -1,0 +1,132 @@
+{
+  "title": "Dashboard Robot",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Räume auswählen",
+        "description": "Schritt 1: Räume wählen. Lichter, Lautsprecher und Kameras werden automatisch gefunden.",
+        "data": {
+          "name": "Profilname",
+          "area_ids": "Räume"
+        }
+      },
+      "devices": {
+        "title": "Manuelle Geräte",
+        "description": "Geräte und optionale Ansichten anpassen.",
+        "data": {
+          "light_entities": "Erlaubte Lichter",
+          "media_entities": "Erlaubte Lautsprecher",
+          "camera_entities": "Kameras, die der Roboter öffnen darf",
+          "view_paths": "Ansichtspfade (optional, durch Kommas getrennt)"
+        }
+      },
+      "placement": {
+        "title": "2 · Roboter",
+        "description": "Sprache, Dashboards und KI-Assistent wählen.",
+        "data": {
+          "language": "Sprache des Roboters",
+          "dashboard_paths": "Dashboards (Mehrfachauswahl)",
+          "agent_id": "KI-Gesprächsassistent"
+        }
+      },
+      "sources": {
+        "title": "Informationen Ihrer Integrationen",
+        "description": "Funktionsquellen einmal prüfen. Weitere Messwerte stehen auf einer separaten optionalen Seite.",
+        "data": {
+          "electricity_price_entity": "Strompreis",
+          "power_entity": "Stromverbrauch",
+          "waste_entity": "Abfallabholung",
+          "fuel_entity": "Kraftstoffpreis",
+          "weather_entity": "Wetter",
+          "package_entities": "Paketsensoren"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrationen",
+        "description": "Integrationen wählen. Danach die Quellen einmal prüfen. Manuelle Geräte und weitere Messwerte sind optional.",
+        "data": {
+          "integration_ids": "Installierte Integrationen (optional)",
+          "advanced": "Lichter, Lautsprecher und Kameras anpassen",
+          "extra_readings": "Weitere Messwerte anpassen (optional)"
+        }
+      },
+      "readings": {
+        "title": "Weitere Messwerte",
+        "description": "Optional: weitere Messwerte wählen. Bestehende Auswahlen bleiben beim Überspringen erhalten.",
+        "data": {
+          "read_entities": "Weitere Informationen zum Lesen"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Dashboard-Pfade ohne Adresse oder Unterseite, durch Kommas getrennt eingeben.",
+      "choose_rooms": "Wähle mindestens einen Raum."
+    },
+    "abort": {
+      "single_instance_allowed": "Bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Räume auswählen",
+        "description": "Schritt 1: Räume wählen. Lichter, Lautsprecher und Kameras werden automatisch gefunden.",
+        "data": {
+          "name": "Profilname",
+          "area_ids": "Räume"
+        }
+      },
+      "devices": {
+        "title": "Manuelle Geräte",
+        "description": "Geräte und optionale Ansichten anpassen.",
+        "data": {
+          "light_entities": "Erlaubte Lichter",
+          "media_entities": "Erlaubte Lautsprecher",
+          "camera_entities": "Kameras, die der Roboter öffnen darf",
+          "view_paths": "Ansichtspfade (optional, durch Kommas getrennt)"
+        }
+      },
+      "placement": {
+        "title": "2 · Roboter",
+        "description": "Sprache, Dashboards und KI-Assistent wählen.",
+        "data": {
+          "language": "Sprache des Roboters",
+          "dashboard_paths": "Dashboards (Mehrfachauswahl)",
+          "agent_id": "KI-Gesprächsassistent"
+        }
+      },
+      "sources": {
+        "title": "Informationen Ihrer Integrationen",
+        "description": "Funktionsquellen einmal prüfen. Weitere Messwerte stehen auf einer separaten optionalen Seite.",
+        "data": {
+          "electricity_price_entity": "Strompreis",
+          "power_entity": "Stromverbrauch",
+          "waste_entity": "Abfallabholung",
+          "fuel_entity": "Kraftstoffpreis",
+          "weather_entity": "Wetter",
+          "package_entities": "Paketsensoren"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrationen",
+        "description": "Integrationen wählen. Danach die Quellen einmal prüfen. Manuelle Geräte und weitere Messwerte sind optional.",
+        "data": {
+          "integration_ids": "Installierte Integrationen (optional)",
+          "advanced": "Lichter, Lautsprecher und Kameras anpassen",
+          "extra_readings": "Weitere Messwerte anpassen (optional)"
+        }
+      },
+      "readings": {
+        "title": "Weitere Messwerte",
+        "description": "Optional: weitere Messwerte wählen. Bestehende Auswahlen bleiben beim Überspringen erhalten.",
+        "data": {
+          "read_entities": "Weitere Informationen zum Lesen"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Dashboard-Pfade ohne Adresse oder Unterseite, durch Kommas getrennt eingeben.",
+      "choose_rooms": "Wähle mindestens einen Raum."
+    }
+  }
+}

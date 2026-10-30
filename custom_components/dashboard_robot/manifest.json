@@ -1,0 +1,19 @@
+{
+  "domain": "dashboard_robot",
+  "name": "Dashboard Robot",
+  "version": "1.7.0-rc.1",
+  "config_flow": true,
+  "dependencies": [
+    "frontend",
+    "http",
+    "websocket_api"
+  ],
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "requirements": [],
+  "codeowners": [
+    "@DarkPayload1"
+  ],
+  "documentation": "https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant#readme",
+  "issue_tracker": "https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant/issues"
+}

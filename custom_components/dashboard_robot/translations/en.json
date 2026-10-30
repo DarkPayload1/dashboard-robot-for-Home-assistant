@@ -1,0 +1,132 @@
+{
+  "title": "Dashboard Robot",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Choose rooms",
+        "description": "Step 1: Choose rooms. Lights, speakers and cameras are found automatically.",
+        "data": {
+          "name": "Profile name",
+          "area_ids": "Rooms"
+        }
+      },
+      "devices": {
+        "title": "Manual devices",
+        "description": "Adjust devices and optional view restriction. Language, AI and source fields are not repeated.",
+        "data": {
+          "light_entities": "Allowed lights",
+          "media_entities": "Allowed speakers",
+          "camera_entities": "Cameras the robot may open",
+          "view_paths": "View paths (optional, comma separated)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Choose language, dashboards and AI assistant. These choices appear only here.",
+        "data": {
+          "language": "Robot language",
+          "dashboard_paths": "Dashboards (select multiple)",
+          "agent_id": "AI conversation agent"
+        }
+      },
+      "sources": {
+        "title": "Information from your integrations",
+        "description": "Review function sources once. Additional readings are kept on a separate optional page. Empty fields are optional.",
+        "data": {
+          "electricity_price_entity": "Electricity price",
+          "power_entity": "Power consumption",
+          "waste_entity": "Waste collection",
+          "fuel_entity": "Fuel price",
+          "weather_entity": "Weather",
+          "package_entities": "Parcel sensors"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrations",
+        "description": "Choose integrations. Next, review function sources once. Manual devices and extra readings are optional.",
+        "data": {
+          "integration_ids": "Installed integrations (optional)",
+          "advanced": "Adjust lights, speakers and cameras",
+          "extra_readings": "Adjust extra readings (optional)"
+        }
+      },
+      "readings": {
+        "title": "Extra readings",
+        "description": "Optional: choose additional readings. Existing choices are preserved when this page is skipped.",
+        "data": {
+          "read_entities": "Other information the robot may read"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Enter dashboard paths without host or subpages, separated by commas.",
+      "choose_rooms": "Choose at least one room."
+    },
+    "abort": {
+      "single_instance_allowed": "Already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Choose rooms",
+        "description": "Step 1: Choose rooms. Lights, speakers and cameras are found automatically.",
+        "data": {
+          "name": "Profile name",
+          "area_ids": "Rooms"
+        }
+      },
+      "devices": {
+        "title": "Manual devices",
+        "description": "Adjust devices and optional view restriction. Language, AI and source fields are not repeated.",
+        "data": {
+          "light_entities": "Allowed lights",
+          "media_entities": "Allowed speakers",
+          "camera_entities": "Cameras the robot may open",
+          "view_paths": "View paths (optional, comma separated)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Choose language, dashboards and AI assistant. These choices appear only here.",
+        "data": {
+          "language": "Robot language",
+          "dashboard_paths": "Dashboards (select multiple)",
+          "agent_id": "AI conversation agent"
+        }
+      },
+      "sources": {
+        "title": "Information from your integrations",
+        "description": "Review function sources once. Additional readings are kept on a separate optional page. Empty fields are optional.",
+        "data": {
+          "electricity_price_entity": "Electricity price",
+          "power_entity": "Power consumption",
+          "waste_entity": "Waste collection",
+          "fuel_entity": "Fuel price",
+          "weather_entity": "Weather",
+          "package_entities": "Parcel sensors"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrations",
+        "description": "Choose integrations. Next, review function sources once. Manual devices and extra readings are optional.",
+        "data": {
+          "integration_ids": "Installed integrations (optional)",
+          "advanced": "Adjust lights, speakers and cameras",
+          "extra_readings": "Adjust extra readings (optional)"
+        }
+      },
+      "readings": {
+        "title": "Extra readings",
+        "description": "Optional: choose additional readings. Existing choices are preserved when this page is skipped.",
+        "data": {
+          "read_entities": "Other information the robot may read"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Enter dashboard paths without host or subpages, separated by commas.",
+      "choose_rooms": "Choose at least one room."
+    }
+  }
+}

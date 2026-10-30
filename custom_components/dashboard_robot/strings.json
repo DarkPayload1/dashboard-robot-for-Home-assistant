@@ -1,0 +1,132 @@
+{
+  "title": "Dashboard Robot",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vælg rum",
+        "description": "Step 1: Choose rooms. Lights, speakers and cameras are found automatically.",
+        "data": {
+          "name": "Navn på robotopsætning",
+          "area_ids": "Rum"
+        }
+      },
+      "devices": {
+        "title": "Manual devices",
+        "description": "Adjust devices and optional view restriction. Language, AI and source fields are not repeated.",
+        "data": {
+          "light_entities": "Lys robotten må styre",
+          "media_entities": "Højttalere robotten må styre",
+          "camera_entities": "Cameras the robot may open",
+          "view_paths": "Rumsider/faner (valgfrit, stier adskilt med komma)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Choose language, dashboards and AI assistant. These choices appear only here.",
+        "data": {
+          "language": "Robottens sprog",
+          "dashboard_paths": "Dashboards (vælg flere)",
+          "agent_id": "AI-assistent (valgfri)"
+        }
+      },
+      "sources": {
+        "title": "Information from your integrations",
+        "description": "Review function sources once. Additional readings are kept on a separate optional page. Empty fields are optional.",
+        "data": {
+          "electricity_price_entity": "Strømpris",
+          "power_entity": "Strømforbrug",
+          "waste_entity": "Affaldsafhentning",
+          "fuel_entity": "Brændstofpris",
+          "weather_entity": "Vejr",
+          "package_entities": "Pakkesensorer"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrations",
+        "description": "Choose integrations. Next, review function sources once. Manual devices and extra readings are optional.",
+        "data": {
+          "integration_ids": "Installed integrations (optional)",
+          "advanced": "Adjust lights, speakers and cameras",
+          "extra_readings": "Adjust extra readings (optional)"
+        }
+      },
+      "readings": {
+        "title": "Extra readings",
+        "description": "Optional: choose additional readings. Existing choices are preserved when this page is skipped.",
+        "data": {
+          "read_entities": "Other information the robot may read"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Skriv dashboardstier uden adresse eller undersider, adskilt med komma.",
+      "choose_rooms": "Vælg mindst ét rum."
+    },
+    "abort": {
+      "single_instance_allowed": "Robotten er allerede tilføjet. Brug Konfigurer til at ændre den."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vælg rum",
+        "description": "Step 1: Choose rooms. Lights, speakers and cameras are found automatically.",
+        "data": {
+          "name": "Navn på robotopsætning",
+          "area_ids": "Rum"
+        }
+      },
+      "devices": {
+        "title": "Manual devices",
+        "description": "Adjust devices and optional view restriction. Language, AI and source fields are not repeated.",
+        "data": {
+          "light_entities": "Lys robotten må styre",
+          "media_entities": "Højttalere robotten må styre",
+          "camera_entities": "Cameras the robot may open",
+          "view_paths": "Rumsider/faner (valgfrit, stier adskilt med komma)"
+        }
+      },
+      "placement": {
+        "title": "2 · Robot",
+        "description": "Choose language, dashboards and AI assistant. These choices appear only here.",
+        "data": {
+          "language": "Robottens sprog",
+          "dashboard_paths": "Dashboards (vælg flere)",
+          "agent_id": "AI-assistent (valgfri)"
+        }
+      },
+      "sources": {
+        "title": "Information from your integrations",
+        "description": "Review function sources once. Additional readings are kept on a separate optional page. Empty fields are optional.",
+        "data": {
+          "electricity_price_entity": "Strømpris",
+          "power_entity": "Strømforbrug",
+          "waste_entity": "Affaldsafhentning",
+          "fuel_entity": "Brændstofpris",
+          "weather_entity": "Vejr",
+          "package_entities": "Pakkesensorer"
+        }
+      },
+      "integrations": {
+        "title": "3 · Integrations",
+        "description": "Choose integrations. Next, review function sources once. Manual devices and extra readings are optional.",
+        "data": {
+          "integration_ids": "Installed integrations (optional)",
+          "advanced": "Adjust lights, speakers and cameras",
+          "extra_readings": "Adjust extra readings (optional)"
+        }
+      },
+      "readings": {
+        "title": "Extra readings",
+        "description": "Optional: choose additional readings. Existing choices are preserved when this page is skipped.",
+        "data": {
+          "read_entities": "Other information the robot may read"
+        }
+      }
+    },
+    "error": {
+      "invalid_paths": "Kontroller dashboardstierne.",
+      "choose_rooms": "Vælg mindst ét rum."
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Dashboard Robot",
+  "homeassistant": "2026.10.0",
+  "zip_release": true,
+  "filename": "dashboard_robot.zip"
+}
