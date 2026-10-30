@@ -1,3 +1,8 @@
+# 1.7.0-rc.12
+
+- Ny hvid robotfigur med blå øjne og gennemsigtig baggrund.
+- Let svævende animation og lysglød ved tale og lytning. Figuren bruger et statisk billede uden separate mund- og øjenbevægelser.
+
 # 1.7.0-rc.11
 
 - Fjerner Se pakker-knappen helt fra robotvinduets handlingslinje. Pakkeoversigten kan fortsat åbnes via spørgsmål og Pakker-genvejen.
