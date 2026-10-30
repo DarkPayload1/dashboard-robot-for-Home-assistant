@@ -45,6 +45,7 @@ def schema(defaults, hass):
     if not options:
         options={'lovelace':'Home'}
     fields={
+        vol.Optional('tts_entity', description={'suggested_value': defaults.get('tts_entity')}): EntitySelector(EntitySelectorConfig(domain='tts')),
         vol.Required('speech_voice', default=defaults.get('speech_voice', 'auto')): SelectSelector(SelectSelectorConfig(options=[{'value':'auto','label':'Automatic'},{'value':'local','label':'On-device voice'},{'value':'online','label':'Online voice'}])),
         vol.Required('speech_rate', default=str(defaults.get('speech_rate', '0.85'))): SelectSelector(SelectSelectorConfig(options=[{'value':'0.5','label':'50 %'},{'value':'0.7','label':'70 %'},{'value':'0.85','label':'85 %'},{'value':'1','label':'100 %'},{'value':'1.1','label':'110 %'},{'value':'1.3','label':'130 %'},{'value':'1.5','label':'150 %'}])),
         vol.Required('robot_name', default=defaults.get('robot_name', 'Huself Kræz')): TextSelector(),
@@ -164,7 +165,7 @@ def apply_sources(hass,draft,user_input):
 
 def basic_schema(defaults,hass):
     return vol.Schema({marker:value for marker,value in schema(defaults,hass).schema.items()
-                       if marker.schema in ['robot_name','speech_voice','speech_rate','language','dashboard_paths','agent_id']})
+                       if marker.schema in ['tts_entity','robot_name','speech_voice','speech_rate','language','dashboard_paths','agent_id']})
 
 def integrations_schema(defaults,hass):
     options=integration_options(hass)

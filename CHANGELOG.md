@@ -1,3 +1,19 @@
+# 1.7.6-rc.1
+
+## Dansk
+
+- Understøtter lokal tale fra Piper via Home Assistant uden Nabu Casa-abonnement.
+- Piper vælges automatisk, hvis tjenesten findes. En anden TTS-tjeneste kan vælges eksplicit under robotindstillingerne.
+- Lyden afspilles på den enhed, dashboardet er åbnet på. Taletempo, stop og mundanimation virker også med lokal lyd.
+- Installer og start Piper, vælg en passende stemme og tilføj Wyoming-integrationen først. Browseren kan kræve et tryk før lydafspilning. Den fysiske Shelly-skærm er endnu ikke afprøvet.
+
+## English
+
+- Supports local Piper speech through Home Assistant without a Nabu Casa subscription.
+- Automatically selects Piper when available. Another TTS service may be explicitly selected in robot settings.
+- Audio plays on the device displaying the dashboard. Speech speed, stop and mouth animation support local audio.
+- Install and start Piper with a matching voice, then add the Wyoming integration. Browsers may require a user gesture before playback. Physical Shelly display playback has not yet been tested.
+
 # 1.7.5-rc.1
 
 ## Dansk

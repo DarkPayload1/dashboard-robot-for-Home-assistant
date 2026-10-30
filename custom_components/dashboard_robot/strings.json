@@ -29,7 +29,8 @@
           "agent_id": "AI-assistent (valgfri)",
           "robot_name": "Robot name",
           "speech_voice": "Preferred voice type",
-          "speech_rate": "Speech speed"
+          "speech_rate": "Speech speed",
+          "tts_entity": "Speech service (optional, Piper is selected automatically)"
         }
       },
       "sources": {
@@ -98,7 +99,8 @@
           "agent_id": "AI-assistent (valgfri)",
           "robot_name": "Robot name",
           "speech_voice": "Preferred voice type",
-          "speech_rate": "Speech speed"
+          "speech_rate": "Speech speed",
+          "tts_entity": "Speech service (optional, Piper is selected automatically)"
         }
       },
       "sources": {

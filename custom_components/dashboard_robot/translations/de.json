@@ -29,7 +29,8 @@
           "agent_id": "KI-Gesprächsassistent",
           "robot_name": "Name des Roboters",
           "speech_voice": "Bevorzugter Stimmtyp",
-          "speech_rate": "Sprechtempo"
+          "speech_rate": "Sprechtempo",
+          "tts_entity": "Sprachdienst (optional, Piper wird automatisch gewählt)"
         }
       },
       "sources": {
@@ -98,7 +99,8 @@
           "agent_id": "KI-Gesprächsassistent",
           "robot_name": "Name des Roboters",
           "speech_voice": "Bevorzugter Stimmtyp",
-          "speech_rate": "Sprechtempo"
+          "speech_rate": "Sprechtempo",
+          "tts_entity": "Sprachdienst (optional, Piper wird automatisch gewählt)"
         }
       },
       "sources": {

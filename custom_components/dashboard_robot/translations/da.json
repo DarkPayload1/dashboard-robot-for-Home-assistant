@@ -29,7 +29,8 @@
           "agent_id": "AI-assistent (valgfri)",
           "robot_name": "Robottens navn",
           "speech_voice": "Foretrukken stemmetype",
-          "speech_rate": "Taletempo"
+          "speech_rate": "Taletempo",
+          "tts_entity": "Taletjeneste (valgfri, Piper vælges automatisk)"
         }
       },
       "sources": {
@@ -98,7 +99,8 @@
           "agent_id": "AI-assistent (valgfri)",
           "robot_name": "Robottens navn",
           "speech_voice": "Foretrukken stemmetype",
-          "speech_rate": "Taletempo"
+          "speech_rate": "Taletempo",
+          "tts_entity": "Taletjeneste (valgfri, Piper vælges automatisk)"
         }
       },
       "sources": {
