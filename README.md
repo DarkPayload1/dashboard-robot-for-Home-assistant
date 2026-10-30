@@ -2,7 +2,7 @@
 
 A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
 
-**First public preview: v1.7.2-rc.1.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
+**First public preview: v1.7.4-rc.1.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
 
 ## Screenshots / Billeder
 
