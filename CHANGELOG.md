@@ -1,3 +1,15 @@
+# 1.7.1-rc.1
+
+## Dansk
+
+- Nyt versionsnummer, så opdateringen sorteres over de gamle 1.7.0-rc-versioner i HACS.
+- Indeholder den nye robot, chatvindue, seks danse og velkomst på valgt sprog fra rc.15.
+
+## English
+
+- New version number so the update sorts above the older 1.7.0 release candidates in HACS.
+- Includes the new robot, redesigned chat, six dances and localized greeting from rc.15.
+
 # 1.7.0-rc.15
 
 ## Dansk
