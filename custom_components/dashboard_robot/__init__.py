@@ -44,11 +44,19 @@ def _entry_config(hass,entry):
     entities, devices, areas = er.async_get(hass), dr.async_get(hass), ar.async_get(hass)
     lights, speakers = {}, {}
     camera_labels={}
+    fuel_entities=set([cfg['fuel_entity']] if cfg.get('fuel_entity') else [])
+    selected_integrations=set(cfg.get('integration_ids') or [])
     allowed_cameras=set(cfg.get('camera_entities') or ([cfg['camera_entity']] if cfg.get('camera_entity') else []))
     allowed_lights, allowed_media = set(cfg.get('light_entities', [])), set(cfg.get('media_entities', []))
     for entity_id, entity in entities.entities.items():
         if entity.disabled_by or hass.states.get(entity_id) is None:
             continue
+        state=hass.states.get(entity_id)
+        attrs=getattr(state,'attributes',{})
+        label=(entity_id+' '+str(attrs.get('friendly_name',''))).casefold()
+        unit=str(attrs.get('unit_of_measurement','')).casefold()
+        if getattr(entity,'config_entry_id',None) in selected_integrations and entity_id.startswith('sensor.') and ('/l' in unit or any(word in label for word in ['benzin','diesel','petrol','octane','oktan','blyfri','e10','e5'])):
+            fuel_entities.add(entity_id)
         device = devices.devices.get(entity.device_id) if entity.device_id else None
         area_id = entity.area_id or (device.area_id if device else None)
         area = areas.async_get_area(area_id) if area_id else None
@@ -70,4 +78,4 @@ def _entry_config(hass,entry):
         key = {'gange':'gang'}.get(key, key)
         if entity_id in allowed_lights:
             lights.setdefault(key, []).append(entity_id)
-    return {**cfg, 'camera_labels': camera_labels, 'profile_id': entry.entry_id, 'controls': {'lights': lights, 'speakers': speakers}}
+    return {**cfg, 'fuel_entities': sorted(fuel_entities), 'camera_labels': camera_labels, 'profile_id': entry.entry_id, 'controls': {'lights': lights, 'speakers': speakers}}

@@ -1,3 +1,8 @@
+# 1.7.0-rc.3
+
+- Retter sammenblanding af benzin- og dieselpriser. Alle brændstofsensorer fra valgte integrationer medtages, og svaret angiver sensorens navn.
+- Brændstofspørgsmål bruger aktuelle sensorværdier, også med en AI-assistent. Manglende typer erstattes aldrig af diesel.
+
 # 1.7.0-rc.1
 
 - Remove repeated setup fields across steps.

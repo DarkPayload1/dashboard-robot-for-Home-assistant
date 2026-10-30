@@ -225,7 +225,7 @@ class DashboardRobot extends HTMLElement {
     const command=this._parseParcelCommand(text);
     if(command){await this._handleParcelCommand(command,readAloud);return;}
     const agent=this._config.agent_id;
-    if(!agent){this._aiAnswer=this._answerQuestion(text);this._busy=false;this._update();return;}
+    if(!agent||this._isFuelQuestion(text)){this._aiAnswer=this._answerQuestion(text);this._busy=false;this._update();return;}
     let timeout;
     try{
       const facts=this._currentFacts();
@@ -410,13 +410,27 @@ class DashboardRobot extends HTMLElement {
     box.replaceChildren();box.hidden=!cameras.length;
     for(const id of cameras){const button=document.createElement('button');button.type='button';button.textContent=label(id);button.disabled=!available.includes(id);button.addEventListener('click',()=>this._openCamera(id));box.append(button);}
   }
+  _isFuelQuestion(question) {return /benzin|diesel|fuel|petrol|gasoline|kraftstoff|blyfri|oktan|octane|brændstof|\be10\b|\be5\b/i.test(question);}
+  _fuelReadings() {
+    const ids=[...new Set([...(this._config.fuel_entities||[]),this._config.fuel_entity].filter(Boolean))];
+    return ids.map(id=>{const s=this._hass.states[id];if(!s)return null;const name=s.attributes?.friendly_name||id,text=(id+' '+name).toLowerCase();
+      const type=/diesel/.test(text)?'diesel':/100/.test(text)?'100':/95|e10|blyfri|benzin|petrol|gasoline|e5/.test(text)?'95':'unknown';
+      return {entity:id,name,type,value:s.state,unit:s.attributes?.unit_of_measurement||null};}).filter(Boolean);
+  }
+  _fuelAnswer(question) {
+    const q=question.toLowerCase(),lang=this._language();
+    const type=/diesel/.test(q)?'diesel':/100/.test(q)?'100':/benzin|petrol|gasoline|blyfri|95|\be10\b|\be5\b/.test(q)?'95':null;
+    const items=this._fuelReadings().filter(r=>(!type||r.type===type)&&!['unknown','unavailable',''].includes(r.value)&&Number.isFinite(Number(String(r.value).replace(',','.'))));
+    if(!items.length)return ({da:'Jeg har ingen tilgængelig pris for den brændstoftype. Kontrollér brændstofsensorerne i Dashboard Robot-indstillingerne.',en:'No price is available for that fuel type. Check the fuel sensors in Dashboard Robot settings.',de:'Für diese Kraftstoffart ist kein Preis verfügbar. Prüfe die Kraftstoffsensoren in den Dashboard Robot-Einstellungen.'})[lang];
+    return items.map(r=>r.name+': '+Number(String(r.value).replace(',','.')).toLocaleString(this._locale(),{minimumFractionDigits:2,maximumFractionDigits:2})+' '+(r.unit||'')).join(' · ');
+  }
   _currentFacts() {
     const states=this._hass.states,m=this._model(states);
     const read=key=>{const id=this._config[key],state=id&&states[id];if(!state||['unknown','unavailable',''].includes(state.state))return null;return {value:state.state,unit:state.attributes?.unit_of_measurement||null};};
     const wasteId=this._config.waste_entity,waste=wasteId&&states[wasteId];
     const weatherId=this._config.weather_entity,weather=weatherId&&states[weatherId];
     const selectedReadings=(this._config.read_entities||[]).map(id=>{const state=states[id];return state?{entity:id,name:state.attributes?.friendly_name||id,value:state.state,unit:state.attributes?.unit_of_measurement||null}:null;}).filter(Boolean);
-    return {selected_readings:selectedReadings,time:new Date().toLocaleString(this._locale(),{timeZone:this._hass.config?.time_zone||'UTC'}),parcels:m.parcels.slice(0,20).map(p=>({carrier:p.carrier,sender:p.sender,status:p.kind,delivery_date:p.date||null})),parcel_sources_configured:!!this._config.sources?.length,electricity_price:read('electricity_price_entity'),power:read('power_entity'),fuel_price:read('fuel_entity'),waste:waste&&!['unknown','unavailable'].includes(waste.state)?{value:waste.state,date:waste.attributes?.date||null,fraction:waste.attributes?.fraction||null}:null,weather:weather&&!['unknown','unavailable'].includes(weather.state)?{condition:weather.state,temperature:weather.attributes?.temperature??null,unit:weather.attributes?.temperature_unit||null}:null,music:m.music||null};
+    return {selected_readings:selectedReadings,time:new Date().toLocaleString(this._locale(),{timeZone:this._hass.config?.time_zone||'UTC'}),parcels:m.parcels.slice(0,20).map(p=>({carrier:p.carrier,sender:p.sender,status:p.kind,delivery_date:p.date||null})),parcel_sources_configured:!!this._config.sources?.length,electricity_price:read('electricity_price_entity'),power:read('power_entity'),fuel_prices:this._fuelReadings(),waste:waste&&!['unknown','unavailable'].includes(waste.state)?{value:waste.state,date:waste.attributes?.date||null,fraction:waste.attributes?.fraction||null}:null,weather:weather&&!['unknown','unavailable'].includes(weather.state)?{condition:weather.state,temperature:weather.attributes?.temperature??null,unit:weather.attributes?.temperature_unit||null}:null,music:m.music||null};
   }
   _resetConversation() {
     if(this._recognition)this._stopListening();
@@ -429,7 +443,8 @@ class DashboardRobot extends HTMLElement {
     const choose=(da,en,de)=>({da,en,de}[lang]);
     const missing=choose('Vælg den relevante sensor under Dashboard Robot → Konfigurer.','Select the relevant sensor in Dashboard Robot → Configure.','Wähle den entsprechenden Sensor unter Dashboard Robot → Konfigurieren.');
     if(/pakke|parcel|package|paket|gls|postnord/.test(q)){if(!this._capabilities().parcels)return choose('Vælg pakkesensorer i indstillingerne, før jeg kan se dine pakker.','Select parcel sensors in settings before I can see your parcels.','Wähle Paketsensoren in den Einstellungen, bevor ich deine Pakete sehen kann.');const m=this._model(this._hass.states);return this._translate(m.title)+' '+this._translate(m.detail);}
-    const key=/forbrug|power|consumption|verbrauch|watt/.test(q)?'power':/benzin|fuel|petrol|kraftstoff/.test(q)?'fuel_price':/strøm|strom|electricity|kwh/.test(q)?'electricity_price':null;
+    if(this._isFuelQuestion(question))return this._fuelAnswer(question);
+    const key=/forbrug|power|consumption|verbrauch|watt/.test(q)?'power':/strøm|strom|electricity|kwh/.test(q)?'electricity_price':null;
     if(key){
       const value=facts[key];if(!value)return missing;
       const numeric=Number(String(value.value).replace(',','.'));

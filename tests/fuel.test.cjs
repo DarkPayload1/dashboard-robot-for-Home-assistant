@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');let C;
+vm.runInNewContext(fs.readFileSync('custom_components/dashboard_robot/frontend/robot.js','utf8').split('// Dashboard-scoped singleton.')[0],{HTMLElement:class{},customElements:{get(){},define(n,c){C=c}},window:{}});
+const r=Object.create(C.prototype);r._config={language:'da',fuel_entity:'sensor.diesel',fuel_entities:['sensor.blyfri_95','sensor.oktan_100','sensor.diesel']};
+r._hass={states:{'sensor.blyfri_95':{state:'16.89',attributes:{friendly_name:'Blyfri 95',unit_of_measurement:'DKK/L'}},'sensor.oktan_100':{state:'19.39',attributes:{friendly_name:'Oktan 100',unit_of_measurement:'DKK/L'}},'sensor.diesel':{state:'19.09',attributes:{friendly_name:'Diesel',unit_of_measurement:'DKK/L'}}}};
+r._model=()=>({parcels:[]});
+assert.match(r._answerQuestion('prisen på benzin'),/Blyfri 95: 16,89/);
+assert.ok(!r._answerQuestion('prisen på benzin').includes('19,09'));
+assert.match(r._answerQuestion('dieselpris'),/Diesel: 19,09/);
+assert.match(r._answerQuestion('oktan 100'),/Oktan 100: 19,39/);
+r._hass.states['sensor.blyfri_95'].state='17.25';assert.match(r._answerQuestion('benzin'),/17,25/);
+r._hass.states['sensor.blyfri_95'].state='unavailable';assert.ok(!r._answerQuestion('benzin').includes('19,09'));
+r._config.fuel_entities=[];assert.ok(!r._answerQuestion('benzin').includes('19,09'));

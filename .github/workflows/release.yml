@@ -25,4 +25,4 @@ jobs:
           cd custom_components/dashboard_robot
           zip -r ../../dashboard_robot.zip . -x '*/__pycache__/*' '*.pyc'
           cd ../..
-          gh release create "$tag" dashboard_robot.zip --target "$GITHUB_SHA" --prerelease --title "Dashboard Robot $tag" --notes "First preview of Dashboard Robot. See README for installation, setup, supported features and limitations. Report problems through Issues."
+          gh release create "$tag" dashboard_robot.zip --target "$GITHUB_SHA" --prerelease --title "Dashboard Robot $tag" --notes "Dashboard Robot preview update. See CHANGELOG.md for changes and README.md for installation."
