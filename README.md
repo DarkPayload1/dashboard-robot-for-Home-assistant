@@ -5,7 +5,7 @@
 
 A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
 
-**First public preview: v1.7.10-rc.1.** Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
+**Latest preview:** [![Latest preview](https://img.shields.io/github/v/release/DarkPayload1/dashboard-robot-for-Home-assistant?include_prereleases&label=preview)](https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant/releases) Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
 
 ## Screenshots / Billeder
 
