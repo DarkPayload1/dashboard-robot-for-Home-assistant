@@ -1,3 +1,17 @@
+# 1.7.0-rc.14
+
+## Dansk
+
+- Nyt chatvindue med beskedbobler for spørgsmål og svar og historik for op til 20 spørgsmål i den åbne samtale.
+- Større skrivefelt, tydelig mikrofonknap og oplæsning ved hvert svar.
+- Fjerner de synlige genveje og pakkehjælpen fra chatvinduet. Du kan fortsat spørge om de valgte funktioner.
+
+## English
+
+- Redesigned chat window with question and answer bubbles and up to 20 turns in the current conversation.
+- Larger text field, a prominent microphone button and a read-aloud button for each answer.
+- Removes visible shortcuts and parcel help from the chat window. Configured features remain available through questions.
+
 # 1.7.0-rc.13
 
 ## Dansk
