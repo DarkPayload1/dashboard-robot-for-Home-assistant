@@ -3,7 +3,15 @@
 [![Open Dashboard Robot in your Home Assistant Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=DarkPayload1&repository=dashboard-robot-for-Home-assistant&category=integration)
 
 
-A floating Home Assistant dashboard companion with text chat, optional voice input and an optional AI conversation agent.
+A floating Home Assistant dashboard companion for asking questions about your home, checking selected information and using supported controls through a chat panel.
+
+### Hvad er Dashboard Robot?
+
+Dashboard Robot er en flytbar hjælper til dit Home Assistant-dashboard. Den samler spørgsmål om hjemmet, udvalgte sensoroplysninger og understøttede handlinger i et chatvindue, som du selv kan placere. Du kan skrive eller bruge valgfri stemmeinput, vælge vinduets størrelse og højde, justere gennemsigtigheden og få placeringen husket. Robotten kan svare ud fra de sensorer og integrationer, du vælger, styre udvalgte lys og medieafspillere samt åbne kameraer i Home Assistants egen visning. En valgfri AI-assistent giver mulighed for friere samtaler; grundlæggende understøttede kommandoer og sensorsvar virker også uden AI.
+
+### What is Dashboard Robot for?
+
+Dashboard Robot is a movable helper for your Home Assistant dashboard. It brings questions about your home, selected sensor information and supported actions together in a chat window that you can place where you want. Type a question or use optional voice input, choose the popup size and height, adjust its transparency and remember its position. The robot can answer from the sensors and integrations you select, control selected lights and media players, and open cameras in Home Assistant's own viewer. An optional AI assistant enables more open-ended conversations; supported basic commands and sensor answers also work without AI.
 
 **Latest preview:** [![Latest preview](https://img.shields.io/github/v/release/DarkPayload1/dashboard-robot-for-Home-assistant?include_prereleases&label=preview)](https://github.com/DarkPayload1/dashboard-robot-for-Home-assistant/releases) Tested by the author in an existing Home Assistant installation; broader clean-install and browser testing is still welcome.
 
