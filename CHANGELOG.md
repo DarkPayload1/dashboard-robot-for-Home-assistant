@@ -1,3 +1,15 @@
+# 1.7.18-rc.1
+
+## Dansk
+
+- Lader dig begynde at skrive et nyt spørgsmål, selvom AI'en stadig arbejder på det gamle.
+- Afbryder den gamle ventende samtale ved første tastetryk, rydder dens gamle besked og beholder den nye tekst klar til afsendelse.
+
+## English
+
+- Lets you start typing a new question while the AI is still working on the previous one.
+- Cancels the old pending conversation on the first keystroke, clears its stale message and keeps the new text ready to send.
+
 # 1.7.17-rc.1
 
 ## Dansk
