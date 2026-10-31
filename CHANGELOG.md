@@ -1,3 +1,19 @@
+# 1.7.17-rc.1
+
+## Dansk
+
+- Retter nulstilling af en samtale, så et gammelt spørgsmål ikke bliver gendannet.
+- Gør knappen tydelig, når den afbryder et ventende svar og starter en ny samtale.
+- Viser en særskilt besked, når Google Gemini melder om høj efterspørgsel.
+- Rydder den gamle mikrofonstatus, når et spørgsmål sendes.
+
+## English
+
+- Fixes conversation reset so an old question is not restored.
+- Clarifies that the button cancels a pending reply and starts a new conversation.
+- Shows a specific message when Google Gemini reports high demand.
+- Clears the stale microphone status when a question is sent.
+
 # 1.7.16-rc.1
 
 ## Dansk
