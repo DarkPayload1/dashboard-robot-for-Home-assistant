@@ -19,7 +19,7 @@ Text chat, voice input and shortcuts in the robot panel.
 
 Tap the robot to open the chat panel.
 
-<a href="https://github.com/user-attachments/assets/db884a8f-18b4-4b69-afb1-7ce118b2917e"><img src="https://github.com/user-attachments/assets/db884a8f-18b4-4b69-afb1-7ce118b2917e" alt="Floating robot in the corner of a Home Assistant dashboard" width="560" /></a>
+<img width="497" height="494" alt="Skærmbillede 2026-10-31 175959" src="https://github.com/user-attachments/assets/67cad0de-1e3f-47ca-ad19-50ce71b43c9d" />
 
 <details>
 <summary><strong>Setup screenshots / Se billeder af opsætningen</strong></summary>
