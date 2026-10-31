@@ -1,3 +1,15 @@
+# 1.7.16-rc.1
+
+## Dansk
+
+- Holder popup-vinduet inden for skærmens kanter, også med gemt placering.
+- Tilpasser den valgte højde til skærmen, så vinduet ikke bliver skåret af.
+
+## English
+
+- Keeps the popup within the viewport, including when a saved position is used.
+- Clamps the selected height to the available screen space.
+
 # 1.7.15-rc.1
 
 ## Dansk
