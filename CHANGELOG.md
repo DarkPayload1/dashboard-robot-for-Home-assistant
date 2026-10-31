@@ -1,3 +1,15 @@
+# 1.7.15-rc.1
+
+## Dansk
+
+- Tilføjer valg af popup-højde: lav, normal eller høj.
+- Popup-indholdet kan rulles, når det ikke kan være inden for den valgte højde.
+
+## English
+
+- Adds low, standard and tall popup height choices.
+- Popup content scrolls when it does not fit within the selected height.
+
 # 1.7.14-rc.1
 
 ## Dansk
