@@ -355,7 +355,8 @@ class DashboardRobot extends HTMLElement {
     this._loadPopupSettings();
     const settingsButton=dialog.querySelector('.settings-button'),settingsPanel=dialog.querySelector('.popup-settings');
     settingsButton.addEventListener('click',()=>{settingsPanel.hidden=!settingsPanel.hidden;});
-    dialog.querySelector('.popup-size').addEventListener('change',event=>{this._popupSettings.size=event.target.value;this._savePopupSettings();});\n    dialog.querySelector('.popup-height').addEventListener('change',event=>{this._popupSettings.height=event.target.value;this._savePopupSettings();});
+    dialog.querySelector('.popup-size').addEventListener('change',event=>{this._popupSettings.size=event.target.value;this._savePopupSettings();});
+    dialog.querySelector('.popup-height').addEventListener('change',event=>{this._popupSettings.height=event.target.value;this._savePopupSettings();});
     dialog.querySelector('.popup-opacity').addEventListener('input',event=>{this._popupSettings.transparency=Number(event.target.value);this._applyPopupSettings();dialog.querySelector('.opacity-value').textContent=event.target.value+'%';});
     dialog.querySelector('.popup-opacity').addEventListener('change',()=>this._savePopupSettings());
     dialog.querySelector('.popup-remember').addEventListener('change',event=>{this._popupSettings.remember=event.target.checked;if(event.target.checked&&dialog.open){const rect=dialog.getBoundingClientRect();this._popupSettings.position={x:rect.left,y:rect.top};}this._savePopupSettings();});
@@ -378,7 +379,8 @@ class DashboardRobot extends HTMLElement {
   _loadPopupSettings(){
     const defaults={size:'standard',height:'standard',transparency:18,remember:false,position:null};
     try{const saved=JSON.parse(localStorage.getItem(this._popupSettingsKey())||'null');if(saved&&typeof saved==='object')Object.assign(defaults,saved);}catch{}
-    if(!['compact','standard','large'].includes(defaults.size))defaults.size='standard';\n    if(!['low','standard','tall'].includes(defaults.height))defaults.height='standard';
+    if(!['compact','standard','large'].includes(defaults.size))defaults.size='standard';
+    if(!['low','standard','tall'].includes(defaults.height))defaults.height='standard';
     defaults.transparency=Math.max(5,Math.min(60,Number(defaults.transparency)||18));defaults.remember=!!defaults.remember;
     if(!defaults.position||!Number.isFinite(defaults.position.x)||!Number.isFinite(defaults.position.y))defaults.position=null;
     this._popupSettings=defaults;
