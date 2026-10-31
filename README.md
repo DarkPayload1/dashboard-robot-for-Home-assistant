@@ -13,7 +13,7 @@ A floating Home Assistant dashboard companion with text chat, optional voice inp
 
 Text chat, voice input and shortcuts in the robot panel.
 
-<a href="https://github.com/user-attachments/assets/d729f5f3-c2ec-4e4e-aeab-6705753ff2df"><img src="https://github.com/user-attachments/assets/d729f5f3-c2ec-4e4e-aeab-6705753ff2df" alt="Dashboard Robot chat panel with text input, voice input and feature shortcuts" width="760" /></a>
+<img width="248" height="231" alt="Skærmbillede 2026-10-31 175734" src="https://github.com/user-attachments/assets/6fb3aa24-9b51-4861-b0cf-2ffd14ae5504" />
 
 ### Floating dashboard companion / Robot på dashboardet
 
