@@ -1,3 +1,19 @@
+# 1.7.14-rc.1
+
+## Dansk
+
+- Tilføjer valg mellem lille, normal og stor popup.
+- Tilføjer justerbar gennemsigtighed.
+- Tilføjer mulighed for at flytte popup-vinduet og huske dets placering.
+- Viser en tydelig kvittering, når indstillingerne er gemt.
+
+## English
+
+- Adds compact, standard and large popup sizes.
+- Adds adjustable transparency.
+- Lets you move the popup and remember its position.
+- Shows a clear confirmation when settings are saved.
+
 # 1.7.13-rc.1
 
 ## Dansk
