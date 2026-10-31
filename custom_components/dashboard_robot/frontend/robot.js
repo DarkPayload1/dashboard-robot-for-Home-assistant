@@ -46,15 +46,19 @@ class DashboardRobot extends HTMLElement {
 @keyframes robotMouthSpeak{from{transform:scaleY(.4)}to{transform:scaleY(1.3)}}
 @media(prefers-reduced-motion:reduce){.robot-art .robot-wave-hand,.robot-mouth-motion{animation:none!important}}
 
-.robot-dialog{width:min(680px,calc(100vw - 24px));border-radius:26px;background:linear-gradient(135deg,rgba(25,48,65,.76),rgba(12,25,41,.72));border:1px solid #a0d9ee42;backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);box-shadow:0 18px 60px #020b1966,inset 0 1px 0 #d1f2ff18}
+.robot-dialog{width:min(480px,calc(100vw - 24px));border-radius:22px;background:linear-gradient(135deg,rgba(25,48,65,.76),rgba(12,25,41,.72));border:1px solid #a0d9ee42;backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);box-shadow:0 18px 60px #020b1966,inset 0 1px 0 #d1f2ff18}
 .dialog-content ha-card{background:transparent}
 .dialog-content .chat-question{background:#285972c7}
 .dialog-content .chat-reply{background:#193347b8}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.robot-dialog{background:#132438f5}}
-.dialog-header{background:#173349b8;border-bottom:1px solid #b6e4f52b;padding:18px 22px}
-.dialog-content .main{padding:20px;display:block}
+.dialog-header{background:#173349b8;border-bottom:1px solid #b6e4f52b;padding:12px 16px}
+.dialog-content .main{padding:14px;display:block}
+.dialog-header h3{font-size:15px}
+.dialog-content h2{font-size:18px}
+.dialog-content .chat-history{max-height:32dvh;gap:10px}
+.dialog-content .voice-settings{margin-top:10px;padding-top:8px}
 .dialog-content .eyebrow,.dialog-content .suggestions,.dialog-content .parcel-help,.dialog-content .actions>.speak{display:none!important}
-.dialog-content .bubble{background:linear-gradient(140deg,#325b735c,#203e5252);padding:22px;border:1px solid #82c9df24;border-radius:20px}
+.dialog-content .bubble{background:linear-gradient(140deg,#325b735c,#203e5252);padding:16px;border:1px solid #82c9df24;border-radius:20px}
 .dialog-content .bubble[hidden]{display:none!important}
 .chat-history{display:flex;flex-direction:column;gap:14px;max-height:46dvh;overflow-y:auto;overscroll-behavior:contain;padding:4px 4px 12px;scrollbar-width:thin;scrollbar-color:#416078 transparent}
 .chat-history:empty{display:none}
@@ -65,13 +69,13 @@ class DashboardRobot extends HTMLElement {
 .chat-reply-text{margin:0;color:inherit;font-size:14px;line-height:1.55;white-space:pre-wrap}
 .chat-read{display:block;margin-top:10px;border:0;background:#ffffff0b;color:#8ddbe9;font-size:11px;padding:6px 10px}
 .chat-read:disabled{display:none}
-.dialog-content .actions{margin:10px 0 14px;justify-content:flex-end}
+.dialog-content .actions{margin:6px 0 10px;justify-content:flex-end}
 .dialog-content .actions .hide-robot{display:inline-flex;margin-left:0;align-items:center;gap:6px}
-.dialog-content .chat{border-top:1px solid #82c9df1c;padding-top:16px;margin-top:8px}
-.dialog-content .chat label{font-size:12px;margin-bottom:10px}
+.dialog-content .chat{border-top:1px solid #82c9df1c;padding-top:12px;margin-top:6px}
+.dialog-content .chat label{font-size:12px;margin-bottom:8px}
 .dialog-content .input-row{align-items:stretch;gap:9px}
-.dialog-content .input-row input{min-height:52px;box-sizing:border-box;border-radius:16px;background:#091a29;padding:14px 16px;font-size:15px}
-.dialog-content .input-row button{min-height:52px;border-radius:16px}
+.dialog-content .input-row input{min-height:46px;box-sizing:border-box;border-radius:14px;background:#091a29;padding:10px 12px;font-size:15px}
+.dialog-content .input-row button{min-height:46px;border-radius:14px}
 .dialog-content .microphone{background:#1f4c60;border-color:#6bc9df66;min-width:72px}
 .dialog-content .chat button[type=submit]{background:#62d7e6;color:#092432;font-weight:700;border-color:transparent;min-width:72px}
 @media(max-width:550px){.chat-message{max-width:94%}.dialog-content .main{padding:14px}.chat-history{max-height:42dvh}.dialog-content .input-row input{flex-basis:100%}}
@@ -373,7 +377,7 @@ class DashboardRobot extends HTMLElement {
       const y=Math.max(8,vh-box.height-12);stage.style.top=y+'px';stage.style.left=Math.max(8,Math.min(vw-box.width-8,box.left))+'px';
       Object.assign(this._dialog.style,{width:panelWidth+'px',left:'12px',top:'12px',maxHeight:Math.max(100,y-24)+'px'});
     }else{
-      panelWidth=Math.min(600,vw-box.width-gap-margin*2);
+      panelWidth=Math.min(480,vw-box.width-gap-margin*2);
       const preferLeft=box.left>vw/2;
       let robotX=box.left;
       if(preferLeft&&robotX-panelWidth-gap<margin)robotX=panelWidth+gap+margin;

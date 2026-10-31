@@ -1,3 +1,17 @@
+# 1.7.13-rc.1
+
+## Dansk
+
+- Gør robottens popup smallere på større skærme: 480 px i stedet for 600 px.
+- Reducerer luft, overskrift og velkomstfelt, så vinduet også bliver lavere. Bevarer glasdesign og tydelige knapper.
+- Lader længere samtaler rulle i et mindre historikfelt; på telefoner tilpasses bredden fortsat til skærmen.
+
+## English
+
+- Makes the robot popup narrower on larger screens: 480 px instead of 600 px.
+- Reduces spacing, header and welcome area to make the window shorter while keeping the glass design and readable controls.
+- Scrolls longer conversations in a smaller history area; phone width still adapts to the screen.
+
 # 1.7.12-rc.1
 
 ## Dansk
