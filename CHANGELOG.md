@@ -1,3 +1,15 @@
+# 1.7.19-rc.1
+
+## Dansk
+
+- Retter en fejl, hvor robotten læste et tal fra vinduesindstillingerne i stedet for teksten i chatfeltet.
+- Spørgsmål, genveje og taleinput bruger nu det rigtige chatfelt.
+
+## English
+
+- Fixes a bug where the robot read a number from the window settings instead of the text in the chat field.
+- Questions, shortcuts and speech input now use the correct chat field.
+
 # 1.7.18-rc.1
 
 ## Dansk
