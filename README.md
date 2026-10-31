@@ -115,6 +115,20 @@ Without an AI assistant, supported basic commands and configured sensor answers 
 
 **Dansk:** Vil du bruge fri AI-samtale, skal du først tilføje **Google Gemini / Google Generative AI** eller en anden kompatibel AI-assistent i Home Assistant. Vælg derefter **Google AI Conversation** under **Dashboard Robot → Konfigurer → Robot → AI-assistent**, og gem opsætningen. Grundfunktionerne virker uden AI. Du skal bruge din egen API-nøgle til Gemini.
 
+## Use Siri with Dashboard Robot
+
+Dashboard Robot does not act as a separate Apple AI provider. On iPhone, you can use Siri to send a prompt to a Home Assistant Assist pipeline through the official Home Assistant Companion app.
+
+1. Set up an Assist pipeline in Home Assistant and choose its conversation agent. The agent can be Google, OpenAI, or a supported local provider.
+2. Install or update the Home Assistant Companion app on your iPhone and connect it to your Home Assistant server.
+3. Open Apple's **Shortcuts** app, create a shortcut, and add the Home Assistant action **Assist prompt**.
+4. Choose your Home Assistant server and Assist pipeline, then name the shortcut, for example **Spør robotten**.
+5. Say **“Hej Siri, Spørg robotten”** and dictate your question.
+
+Siri sends the request to the pipeline you selected. To control devices, expose them to Assist and use a conversation agent that supports control. Siri shortcuts are configured on each person's Apple device; they are not installed by downloading the Dashboard Robot ZIP.
+
+**Dansk:** Siri kan sende et spørgsmål til en Assist-pipeline gennem den officielle Home Assistant-app. Opret en pipeline i Home Assistant, vælg den ønskede samtaleassistent, og lav derefter en Genvej på iPhone med handlingen **Assist prompt**. Giv genvejen et navn som “Spørg robotten”, og start den med “Hej Siri”. Enheder, der skal styres, skal være eksponeret for Assist. Genvejen oprettes på den enkelte iPhone og følger ikke med robot-ZIP-filen.
+
 ## Install with HACS
 
 [![Open Dashboard Robot in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=DarkPayload1&repository=dashboard-robot-for-Home-assistant&category=integration)

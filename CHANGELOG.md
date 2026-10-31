@@ -1,3 +1,15 @@
+# 1.7.20-rc.1
+
+## Dansk
+
+- Dokumenterer, hvordan Siri på iPhone kan sende spørgsmål til en Home Assistant Assist-pipeline via Genveje.
+- Forklarer, at man selv skal oprette Siri-genvejen på sin iPhone.
+
+## English
+
+- Documents how Siri on iPhone can send questions to a Home Assistant Assist pipeline through Shortcuts.
+- Explains that each user creates the Siri shortcut on their own iPhone.
+
 # 1.7.19-rc.1
 
 ## Dansk
