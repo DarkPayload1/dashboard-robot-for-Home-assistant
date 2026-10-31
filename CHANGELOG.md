@@ -1,3 +1,15 @@
+# 1.7.12-rc.1
+
+## Dansk
+
+- Retter glasdesignet på computere, hvor browseren melder reduceret gennemsigtighed: robottens popup forbliver nu gennemsigtig i stedet for at blive ensfarvet.
+- Bevarer sløring, læselige tekstfelter og reservebaggrund til browsere uden understøttelse af sløring.
+
+## English
+
+- Fixes the glass design on computers whose browser reports reduced transparency: the robot popup now keeps its translucent appearance instead of switching to a solid background.
+- Preserves backdrop blur, readable inputs and the fallback background for browsers without blur support.
+
 # 1.7.11-rc.1
 
 ## Dansk
