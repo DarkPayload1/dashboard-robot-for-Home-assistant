@@ -106,9 +106,9 @@ class DashboardRobot extends HTMLElement {
     this._setupExpressions();
     this.shadowRoot.querySelector('.confirm-parcel').addEventListener('click',()=>this._confirmParcel());
     this.shadowRoot.querySelector('.cancel-parcel').addEventListener('click',()=>{this._pendingParcel=null;this._aiAnswer='Fjernelsen er annulleret. Pakkesporingen er bevaret.';this._update();});
-    this.shadowRoot.querySelector('form').addEventListener('submit',e=>{e.preventDefault();this._ask(this.shadowRoot.querySelector('input').value);});
+    this.shadowRoot.querySelector('form').addEventListener('submit',e=>{e.preventDefault();this._ask(e.currentTarget.querySelector('input').value);});
     const chatInput=this.shadowRoot.querySelector('.chat input');chatInput.addEventListener('input',()=>{if(!this._busy)return;const draft=chatInput.value;this._resetConversation();chatInput.value=draft;chatInput.focus({preventScroll:true});});
-    for(const button of this.shadowRoot.querySelectorAll('[data-question]'))button.addEventListener('click',()=>{this.shadowRoot.querySelector('input').value=button.dataset.question;this._ask(button.dataset.question);});
+    for(const button of this.shadowRoot.querySelectorAll('[data-question]'))button.addEventListener('click',()=>{this.shadowRoot.querySelector('.chat input').value=button.dataset.question;this._ask(button.dataset.question);});
     this.shadowRoot.querySelector('.reset-answer').addEventListener('click',()=>this._resetConversation());
     this.shadowRoot.querySelector('.speak').addEventListener('click',()=>this._speak());
     this.shadowRoot.querySelector('.microphone').addEventListener('click',()=>this._listen());
@@ -400,7 +400,7 @@ class DashboardRobot extends HTMLElement {
   _openRobotChat(){
     if(!this._visible)return;
     if(!this._dialog.open)this._dialog.show();this._positionSideChat();this._refreshExpression();
-    if(!this._busy)this.shadowRoot.querySelector('input').focus({preventScroll:true});
+    if(!this._busy)this.shadowRoot.querySelector('.chat input').focus({preventScroll:true});
   }
   _positionSideChat(){
     if(!this._dialog?.open)return;
@@ -467,7 +467,7 @@ class DashboardRobot extends HTMLElement {
       if(this._recognition!==recognition)return;
       let finalText='',draft='';
       for(let i=0;i<event.results.length;i++){const result=event.results[i];const text=result[0]?.transcript||'';if(result.isFinal)finalText+=text+' ';else draft+=text+' ';}
-      transcript=finalText.trim().slice(0,1000);this.shadowRoot.querySelector('input').value=(finalText+draft).trim().slice(0,1000);
+      transcript=finalText.trim().slice(0,1000);this.shadowRoot.querySelector('.chat input').value=(finalText+draft).trim().slice(0,1000);
       if(transcript){try{recognition.stop();}catch{}}
     };
     recognition.onerror=event=>{
@@ -765,7 +765,7 @@ class DashboardRobot extends HTMLElement {
     this._requestToken=(this._requestToken||0)+1;this._busy=false;this._question='';this._aiAnswer='';this._conversationId=null;this._pendingParcel=null;this._chatTurns=[];
     try{sessionStorage.removeItem(storageKey);}catch{}
     if(this._utterance){window.speechSynthesis?.cancel();this._finishSpeech();}
-    const input=this.shadowRoot.querySelector('input');if(input)input.value='';
+    const input=this.shadowRoot.querySelector('.chat input');if(input)input.value='';
     const note=this.shadowRoot.querySelector('.voice-note');if(note)note.textContent='';
     const history=this.shadowRoot.querySelector('.chat-history');if(history)history.replaceChildren();
     this._update();
