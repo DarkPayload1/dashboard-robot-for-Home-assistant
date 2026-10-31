@@ -1,3 +1,17 @@
+# 1.7.11-rc.1
+
+## Dansk
+
+- Giver robottens popup et gennemsigtigt glasdesign med sløret dashboard bag vinduet, blød kant og diskret skygge.
+- Tilpasser overskrift og samtalebobler til glasdesignet, mens tekstfelt og knapper fortsat er tydelige.
+- Bruger en mere dækkende baggrund, hvis browseren ikke understøtter sløring, eller der er valgt reduceret gennemsigtighed.
+
+## English
+
+- Gives the robot popup a translucent glass design with a blurred dashboard behind it, a soft border and a subtle shadow.
+- Restyles the header and conversation bubbles while keeping the input and buttons readable.
+- Uses a more opaque background when backdrop blur is unsupported or reduced transparency is requested.
+
 # 1.7.10-rc.1
 
 ## Dansk

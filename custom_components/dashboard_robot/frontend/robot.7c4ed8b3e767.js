@@ -46,11 +46,16 @@ class DashboardRobot extends HTMLElement {
 @keyframes robotMouthSpeak{from{transform:scaleY(.4)}to{transform:scaleY(1.3)}}
 @media(prefers-reduced-motion:reduce){.robot-art .robot-wave-hand,.robot-mouth-motion{animation:none!important}}
 
-.robot-dialog{width:min(680px,calc(100vw - 24px));border-radius:26px;background:#101f30}
-.dialog-header{background:#13273a;border-bottom:1px solid #86cde51c;padding:18px 22px}
+.robot-dialog{width:min(680px,calc(100vw - 24px));border-radius:26px;background:linear-gradient(135deg,rgba(25,48,65,.76),rgba(12,25,41,.72));border:1px solid #a0d9ee42;backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);box-shadow:0 18px 60px #020b1966,inset 0 1px 0 #d1f2ff18}
+.dialog-content ha-card{background:transparent}
+.dialog-content .chat-question{background:#285972c7}
+.dialog-content .chat-reply{background:#193347b8}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.robot-dialog{background:#132438f5}}
+@media(prefers-reduced-transparency:reduce){.robot-dialog{background:#132438;backdrop-filter:none;-webkit-backdrop-filter:none}.dialog-content .chat-question{background:#285972}.dialog-content .chat-reply{background:#193347}}
+.dialog-header{background:#173349b8;border-bottom:1px solid #b6e4f52b;padding:18px 22px}
 .dialog-content .main{padding:20px;display:block}
 .dialog-content .eyebrow,.dialog-content .suggestions,.dialog-content .parcel-help,.dialog-content .actions>.speak{display:none!important}
-.dialog-content .bubble{background:linear-gradient(140deg,#203b50,#172b3e);padding:22px;border:1px solid #82c9df24;border-radius:20px}
+.dialog-content .bubble{background:linear-gradient(140deg,#325b735c,#203e5252);padding:22px;border:1px solid #82c9df24;border-radius:20px}
 .dialog-content .bubble[hidden]{display:none!important}
 .chat-history{display:flex;flex-direction:column;gap:14px;max-height:46dvh;overflow-y:auto;overscroll-behavior:contain;padding:4px 4px 12px;scrollbar-width:thin;scrollbar-color:#416078 transparent}
 .chat-history:empty{display:none}
@@ -70,6 +75,7 @@ class DashboardRobot extends HTMLElement {
 .dialog-content .input-row button{min-height:52px;border-radius:16px}
 .dialog-content .microphone{background:#1f4c60;border-color:#6bc9df66;min-width:72px}
 .dialog-content .chat button[type=submit]{background:#62d7e6;color:#092432;font-weight:700;border-color:transparent;min-width:72px}
+@media(prefers-reduced-transparency:reduce){.dialog-header{background:#162e42}.dialog-content .bubble{background:#203b50}}
 @media(max-width:550px){.chat-message{max-width:94%}.dialog-content .main{padding:14px}.chat-history{max-height:42dvh}.dialog-content .input-row input{flex-basis:100%}}
 
 .stage.music-moves[data-dance="bounce"] .robot-art{animation:danceBounce .9s ease-in-out infinite}
