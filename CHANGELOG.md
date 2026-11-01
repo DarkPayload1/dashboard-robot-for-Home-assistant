@@ -1,3 +1,15 @@
+# 1.7.21-rc.1
+
+## Dansk
+
+- Læser automatisk svaret højt, når spørgsmålet sendes fra chatfeltet.
+- Vejleder telefonbrugere til tastaturdiktat, når browseren ikke understøtter robotens taleinput.
+
+## English
+
+- Automatically reads the answer aloud when a question is submitted from the chat field.
+- Guides phone users to keyboard dictation when the browser does not support the robot's speech input.
+
 # 1.7.20-rc.1
 
 ## Dansk
