@@ -1,3 +1,13 @@
+# 1.7.22-rc.1
+
+## Dansk
+
+- Flytter valg af stemme, taletempo og velkomsttale ind under tandhjulets indstillinger.
+
+## English
+
+- Moves voice, speech speed and welcome speech settings into the gear menu.
+
 # 1.7.21-rc.1
 
 ## Dansk
