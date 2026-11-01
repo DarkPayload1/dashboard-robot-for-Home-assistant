@@ -3,7 +3,7 @@
 ## Dansk
 
 - Læser automatisk svaret højt, når spørgsmålet sendes fra chatfeltet.
-- Giver en vejledning til tastaturdiktat på telefoner, hvor browseren ikke understøtter robotten's taleinput.
+- Vejleder telefonbrugere til tastaturdiktat, når browseren ikke understøtter robotens taleinput.
 
 ## English
 
